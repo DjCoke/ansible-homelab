@@ -1,0 +1,44 @@
+---
+ 
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: Install Updates (CentOS)
+    tags: always
+    dnf:
+     update_only: yes
+     update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: Install Updates (Ubuntu)
+    tags: always
+    apt:
+     upgrade: dist
+     update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+  
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: Create s1m0ne user
+    tags: always
+    user:
+      name: s1m0ne
+      groups: root
+  
+  - name: Add SSH Key for s1m0ne
+    tags: always
+    authorized_key:
+      user: s1m0ne
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZTnWTe0jnZiyrifnUbiEdgBjZpTno0C3IxT5cVasmw ansible"
+
+  - name: Add sudoers File for s1m0ne
+    tags: always
+    copy:
+      src: sudoer_s1m0ne
+      dest: /etc/sudoers.d/s1m0ne
+      owner: root
+      group: root
+      mode: 0440
