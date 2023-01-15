@@ -1,6 +1,8 @@
 - name: install unzip
   package:
-  name: unzip
+    name:
+      - unzip
+      - wget
 
 - name: install terraform
   unarchive:
