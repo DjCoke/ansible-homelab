@@ -1,0 +1,17 @@
+- name: Entreprise uitzetten
+  replace:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    regexp: '^\s*(deb https.*)'
+    replace: '#\1'
+
+- name: update repository index (Proxmox)
+  tags: always
+  apt:
+   update_cache: yes
+  changed_when: false
+  when: ansible_distribution == "Ubuntu" or "Debian"
+
+- name: Add specified Proxmox no Subscription repositery
+  ansible.builtin.apt_repository:
+    repo: deb http://download.proxmox.com/debian bullseye pve-no-subscription
+    state: present

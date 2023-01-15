@@ -11,7 +11,7 @@
     changed_when: false
     when: ansible_distribution == "CentOS"
 
-  - name: Install Updates (Ubuntu)
+  - name: Install Updates (Ubuntu / Debian)
     tags: always
     apt:
      update_cache: yes
@@ -43,3 +43,7 @@
   roles:
     - file_servers
 
+- hosts: proxmox
+  become: true
+  roles:
+    - proxmox
