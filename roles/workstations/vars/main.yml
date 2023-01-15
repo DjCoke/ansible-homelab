@@ -1,0 +1,14 @@
+---
+# vars file for ohmyzsh
+
+# Install ohmyzsh for the defined users.
+ohmyzsh_users:
+#  - s1m0ne
+  - erwin
+
+# Setup the ohmyzsh theme to used
+ohmyzsh_theme: powerlevel10k/powerlevel10k
+
+# Setup the ohmyzsh plugins to used
+ohmyzsh_plugins:
+  - git

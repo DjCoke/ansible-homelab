@@ -2,3 +2,39 @@
    authorized_key:
      user: s1m0ne
      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZTnWTe0jnZiyrifnUbiEdgBjZpTno0C3IxT5cVasmw ansible"
+
+ - name: install common command line tools
+   become: yes
+   apt:
+     name:
+       - bat
+       - btop
+       - curl
+       - dos2unix
+       - duf
+       - fd-find
+       - fzf
+       - git-absorb
+       - git-extras
+       - glances
+       - graphviz
+       - grc
+       - hexyl
+       - htop
+       - httpie
+       - hyperfine
+       - jq
+       - lnav
+       - mtr
+       - multitail
+       - neofetch
+       - ripgrep
+       - shellcheck
+       - shfmt
+       - silversearcher-ag
+       - ssh-tools
+       - tree
+       - vim-airline
+       - wget
+       - zoxide
+     state: present

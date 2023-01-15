@@ -1,14 +1,31 @@
-- name: install unzip
-  package:
-    name:
-      - unzip
-      - wget
+# tasks file for ansible-role-ohmyzsh
 
-- name: install terraform
-  unarchive:
-    src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
-    dest: /usr/local/bin
-    remote_src: yes
-    mode: 0755
-    owner: root
-    group: root
+- name: Include OS specific variables.
+  include_vars: "{{ ansible_system }}.yml"
+
+- name: Install ohmyzsh
+  include_tasks: "setup-ohmyzsh.yml"
+
+- name: Defined ohmyzsh themes
+  include_tasks: "themes.yml"
+
+- name: Install ohmyzsh plugins
+  include_tasks: "plugins.yml"
+
+#- name: install terraform
+#  unarchive:
+#    src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+#    dest: /usr/local/bin
+#    remote_src: yes
+#    mode: 0755
+#    owner: root
+#    group: root
+
+#- name: Set user erwin shell as zsh
+#  user:
+#    name: "erwin"
+#    shell: /bin/zsh
+
+#- name: Check User (Debug)
+#  become_user: erwin
+#  shell: whoami

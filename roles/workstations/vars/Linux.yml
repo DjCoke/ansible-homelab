@@ -1,0 +1,10 @@
+package_requirements:
+  - git
+  - zsh
+  - unzip
+  - wget
+  - iputils-ping
+  - nano
+  - acl
+
+zsh_bin_path: /usr/bin/zsh
