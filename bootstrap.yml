@@ -21,7 +21,14 @@
 - hosts: all
   become: true
   tasks:
-  
+
+  - name: Make sure that sudo exists (proxmox does not by default)
+    tags: always
+    package:
+      name: sudo
+      state: present
+    when: ansible_distribution == "Debian"
+ 
   - name: Create s1m0ne user
     tags: always
     user:
