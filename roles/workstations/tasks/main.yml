@@ -12,6 +12,9 @@
 - name: Install ohmyzsh plugins
   include_tasks: "plugins.yml"
 
+- name: Install p10k
+  include_tasks: "setup-p10k.yml"
+
 #- name: install terraform
 #  unarchive:
 #    src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip

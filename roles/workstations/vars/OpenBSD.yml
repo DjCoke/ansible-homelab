@@ -1,5 +1,9 @@
 package_requirements:
   - git
   - zsh
+  - wget
+  - curl
 
 zsh_bin_path: /usr/local/bin/zsh
+
+fonts_path: /usr/local/share/fonts/TTF

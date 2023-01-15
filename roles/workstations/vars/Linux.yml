@@ -6,5 +6,8 @@ package_requirements:
   - iputils-ping
   - nano
   - acl
+  - curl
 
 zsh_bin_path: /usr/bin/zsh
+
+fonts_path: /usr/share/fonts/TTF

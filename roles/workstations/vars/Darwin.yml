@@ -1,0 +1,5 @@
+package_requirements: []
+
+fonts_path: /Library/Fonts
+
+zsh_bin_path: /bin/zsh
