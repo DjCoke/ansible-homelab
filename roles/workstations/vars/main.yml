@@ -12,6 +12,12 @@ ohmyzsh_theme: powerlevel10k/powerlevel10k
 # Setup the ohmyzsh plugins to used
 ohmyzsh_plugins:
   - git
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+  - macos
+  - sudo
+  - dirhistory
+  - history
 
 # defaults file for ansible-role-p10k
 # Powerlevel10k Git repository url
