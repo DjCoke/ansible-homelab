@@ -1,0 +1,12 @@
+---
+- name: proxmox-boot-tool
+  tags: proxmox,boot-tool
+  command: proxmox-boot-tool refresh
+
+# handlers file for ansible-kernel-modules
+# galexrt/ansible-kernel-modules
+- name: restart systemd-modules-load
+  service:
+    name: systemd-modules-load
+    enabled: yes
+    state: restarted
