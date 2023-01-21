@@ -11,12 +11,12 @@
      update_cache: yes
     when: ansible_distribution == "CentOS"
 
-  - name: Install Updates (Ubuntu)
+  - name: Install Updates (Ubuntu and Debian)
     tags: always
     apt:
      upgrade: dist
      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
+    when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" 
   
 - hosts: all
   become: true
@@ -44,7 +44,7 @@
   - name: Add sudoers File for s1m0ne
     tags: always
     copy:
-      src: sudoer_s1m0ne
+      src: sudoers_s1m0ne
       dest: /etc/sudoers.d/s1m0ne
       owner: root
       group: root
