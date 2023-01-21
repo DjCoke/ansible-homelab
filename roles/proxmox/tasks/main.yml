@@ -1,11 +1,12 @@
 - name: Entreprise uitzetten
+  tags: proxmox
   replace:
     path: /etc/apt/sources.list.d/pve-enterprise.list
     regexp: '^\s*(deb https.*)'
     replace: '#\1'
 
 - name: update repository index (Proxmox)
-  tags: always
+  tags: always,proxmox
   apt:
    update_cache: yes
   changed_when: false
@@ -15,3 +16,33 @@
   ansible.builtin.apt_repository:
     repo: deb http://download.proxmox.com/debian bullseye pve-no-subscription
     state: present
+
+- name: Add quiet intel_iommu=on to kernel cmdline
+  tags: proxmox,iommu
+  lineinfile:
+    path: /etc/kernel/cmdline
+    backrefs: true
+    regexp: '^(((?!quiet intel_iommu=on).)*)$'
+    line: '\1 quiet intel_iommu=on'
+    state: present
+  notify: proxmox-boot-tool
+
+  # inspired from galexrt/ansible-kernel-modules
+- name: Add kernel modules to autoload file
+  tags: proxmox,iommu
+  lineinfile:
+    create: yes
+    dest: "/etc/modules-load.d/load-ansible.conf"
+    line: "{{ item }}"
+    state: present
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+      - vfio
+      - vfio_iommu_type1
+      - vfio_pci
+      - vfio_virqfd
+  notify:
+    - restart systemd-modules-load
+

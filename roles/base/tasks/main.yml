@@ -8,21 +8,21 @@
    apt:
      name:
        - bat
-       - btop
+         # - btop
        - curl
        - dos2unix
-       - duf
+         # - duf
        - fd-find
        - fzf
        - git-absorb
        - git-extras
-       - glances
+         # - glances
        - graphviz
        - grc
        - hexyl
        - htop
        - httpie
-       - hyperfine
+         # - hyperfine
        - jq
        - lnav
        - mtr
@@ -30,7 +30,7 @@
        - neofetch
        - ripgrep
        - shellcheck
-       - shfmt
+         # - shfmt
        - silversearcher-ag
        - ssh-tools
        - tree
