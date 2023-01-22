@@ -1,11 +1,4 @@
 ---
-#- name: Set zsh as default shell
-#  user:
-#    name: "{{ item }}"
-#    shell: "{{ zsh_bin_path }}"
-#  become: yes
-#  with_items: "{{ p10k_users }}"
-
 - name: Setup powerlevel10k
   template:
     src: "p10k-{{ p10k_style[p10k_prompt_style] }}.zsh.j2"
