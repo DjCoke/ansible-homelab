@@ -1,9 +1,4 @@
 ---
-- name: Setup | Package requirements
-  package:
-    name: "{{ package_requirements }}"
-    state: present
-
 - name: Setup | Download ohmyzsh
   git:
     repo: 'https://github.com/ohmyzsh/ohmyzsh.git'

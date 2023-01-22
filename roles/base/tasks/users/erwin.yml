@@ -9,7 +9,7 @@
   user:
     name: erwin
     group: erwin
-    groups: adm,ansible,{{ sudo_group }}
+    groups: adm,ansible,{{ sudo_group }},users
     state: present
     comment: "Erwin van de Glind"
     password: "{{ erwin_passwd }}"

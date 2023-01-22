@@ -1,5 +1,4 @@
----
- 
+--- 
 - hosts: all
   become: true
   pre_tasks:
@@ -29,11 +28,17 @@
       state: present
     when: ansible_distribution == "Debian"
  
+  - name: groups | ansible | create group ansible
+    tags: groups,s1m0ne,users,ansible,always
+    group:
+      name: ansible
+      state: present
+
   - name: Create s1m0ne user
     tags: always
     user:
       name: s1m0ne
-      groups: root
+      groups: root,ansible
   
   - name: Add SSH Key for s1m0ne
     tags: always
@@ -50,8 +55,3 @@
       group: root
       mode: 0440
 
-  - name: users | s1m0ne | create group ansible
-    tags: groups,s1m0ne,users,ansible,always
-    group:
-      name: ansible
-      state: present

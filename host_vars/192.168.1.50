@@ -3,16 +3,25 @@ branch: master
 
 ansible_cron_minute: "40"
 ssh_port: 22
-ssh_users: "user1 user2"
+ssh_users: "erwin s1m0ne"
 
 # platform-specific
 linode_instance: false
 microcode_amd_install: false
-microcode_intel_install: true
+microcode_intel_install: false
 proxmox_instance: false
 raspberry_pi: false
+zsh_bin_path: /usr/bin/zsh
+fonts_path: /usr/share/fonts/TTF
 
-# server smb server
+# server?
 unattended_upgrades: true
 web_server: false
+proxmox_server: false
+
+
+# specific packages for this machine
+package_requirements: []
+
+
 

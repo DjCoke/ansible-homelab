@@ -13,7 +13,7 @@
       - aptitude
       - software-properties-common
     state: latest
-  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+  when: ansible_pkg_mgr == "apt" 
 
 - name: system setup | repositories | remove entreprise for proxmox
   tags: proxmox
@@ -22,13 +22,19 @@
     regexp: '^\s*(deb https.*)'
     replace: '#\1'
   notify: apt_update
-  when: proxmox_instance
+  when: proxmox_server
 
 - name: Add specified Proxmox no Subscription repositery
   ansible.builtin.apt_repository:
     repo: deb http://download.proxmox.com/debian bullseye pve-no-subscription
     state: present
   notify: apt_update
-  when: proxmox_instance
+  when: proxmox_server
 
-
+- name: Add non-free repository
+  replace:
+    dest: /etc/apt/sources.list
+    regexp: '^(deb(?!.* non-free).*)'
+    replace: '\1 non-free'
+  notify: apt_update
+  when: proxmox_server

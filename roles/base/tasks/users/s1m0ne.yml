@@ -14,3 +14,10 @@
     owner: root
     group: root
     mode: 0440
+
+- name: users | s1m0ne | place user in group
+  tags: s1m0ne
+  user:
+    name: s1m0ne
+    groups: ansible,root,{{ sudo_group }} 
+    state: present
