@@ -5,10 +5,12 @@
   when: healthcheck_uuid is defined
 
 - name: send completion notification via telegram
-  tags: always
-  telegram:
+  tags: always,telegram
+  community.general.telegram:
     token: "{{ telegram_token }}"
-    chat_id: "{{ telegram_chat_id }}"
-    msg_format: markdown
-    msg: "✔️  Ansible provision finished on *{{ ansible_hostname }}*"
-  changed_when: False
+    api_args:
+      chat_id: "{{ telegram_chat_id }}"
+      parse_mode: "markdown"
+      text: "✔️  Ansible provision finished on *{{ ansible_hostname }}*"
+      disable_web_page_preview: true
+      disable_notification: true
