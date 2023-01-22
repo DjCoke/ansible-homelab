@@ -1,1 +1,12 @@
+# user related vars
 erwin_passwd: '!'
+
+# Install ohmyzsh for the defined users.
+# Default: the linux user running Ansible
+ohmyzsh_users:
+  - erwin
+ 
+# Install p10k for the following linux users
+# Default: the linux user running Ansible
+p10k_users:
+  - erwin
