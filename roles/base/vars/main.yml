@@ -10,3 +10,8 @@ ohmyzsh_users:
 # Default: the linux user running Ansible
 p10k_users:
   - erwin
+
+zsh_bin_path: /usr/bin/zsh
+fonts_path: /usr/share/fonts/TTF
+# specific packages for this machine (maybe deprecated?)
+package_requirements: []

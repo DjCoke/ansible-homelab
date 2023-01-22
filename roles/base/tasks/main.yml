@@ -28,5 +28,15 @@
   - import_tasks: system_setup/openssh.yml
   - import_tasks: system_setup/scripts.yml
 
+  # Perform install of ohmyzsh and p10k
+  - include_vars: p10k.yml
+  - import_tasks: ohmyzsh/setup-ohmyzsh.yml
+  - import_tasks: ohmyzsh/themes.yml
+  - import_tasks: ohmyzsh/plugins.yml  
+  - include_vars: "{{ p10k_style[p10k_prompt_style] }}.yml"
+  - import_tasks: ohmyzsh/setup-p10k.yml
+  - import_tasks: p10k-fonts.yml
+  - import_tasks: p10k-configure.yml
+
   rescue:
     - set_fact: task_failed=true
