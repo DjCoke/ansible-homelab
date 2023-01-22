@@ -6,13 +6,15 @@
   pre_tasks:
     - name: Install Updates (CentOS)
       tags: always
-      dnf: update_cache = true
+      dnf:
+        update_cache: true
       changed_when: false
       when: ansible_distribution == "CentOS"
 
     - name: Install Updates (Ubuntu / Debian)
       tags: always
-      apt: update_cache = yes
+      apt:
+        update_cache: true
       changed_when: false
       when: ansible_pkg_mgr == "apt"
 
