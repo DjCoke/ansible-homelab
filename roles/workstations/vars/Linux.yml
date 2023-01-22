@@ -5,7 +5,6 @@ package_requirements:
   - wget
   - iputils-ping
   - nano
-  - acl
   - curl
 
 zsh_bin_path: /usr/bin/zsh

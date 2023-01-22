@@ -1,0 +1,34 @@
+- name: system setup | repositories | add ignored packages for archlinux hosts
+  tags: packages,repositories
+  lineinfile:
+      dest: /etc/pacman.conf
+      regexp: "^#?IgnorePkg"
+      line: "IgnorePkg   = ansible linux linux-headers linux-lts linux-lts-headers"
+  when: ansible_distribution == "Archlinux"
+
+- name: system setup | repositories | install package management tools (debian-based)
+  tags: packages,system,settings
+  package:
+    name:
+      - aptitude
+      - software-properties-common
+    state: latest
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+- name: system setup | repositories | remove entreprise for proxmox
+  tags: proxmox
+  replace:
+    path: /etc/apt/sources.list.d/pve-enterprise.list
+    regexp: '^\s*(deb https.*)'
+    replace: '#\1'
+  notify: apt_update
+  when: proxmox_instance
+
+- name: Add specified Proxmox no Subscription repositery
+  ansible.builtin.apt_repository:
+    repo: deb http://download.proxmox.com/debian bullseye pve-no-subscription
+    state: present
+  notify: apt_update
+  when: proxmox_instance
+
+

@@ -1,0 +1,44 @@
+- name: users |erwin | create group
+  tags: groups,erwin,users
+  group:
+    name: erwin
+    state: present
+
+- name: users | erwin | create user
+  tags: erwin,sudo,users
+  user:
+    name: erwin
+    group: erwin
+    groups: adm,ansible,{{ sudo_group }}
+    state: present
+    comment: "Erwin van de Glind"
+    password: "{{ erwin_passwd }}"
+
+- name: users | erwin | erwin | add sudoers file
+  tags: erwin,settings,simone,sudo,system,users
+  copy:
+    src: users/sudoers_erwin
+    dest: /etc/sudoers.d/erwin
+    owner: root
+    group: root
+    mode: 0440
+
+#- name: users | erwin | create .ssh directory
+#  tags: dotfiles,erwin,ssh,users
+#  file:
+#    path: "{{ item.dir }}"
+#    state: directory
+#    owner: erwin
+#    group: erwin
+#    mode: 0700
+#  with_items:
+#    - { dir: '/home/erwin/.ssh' }
+
+- name: users | erwin | add public key
+  tags: dotfiles,erwin,ssh,ssh-keys,users
+  authorized_key:
+    user: erwin
+    key: "{{ item }}"
+  with_file:
+    - users/erwin/ssh/erwin_id_ed25519.pub
+

@@ -49,3 +49,9 @@
       owner: root
       group: root
       mode: 0440
+
+  - name: users | s1m0ne | create group ansible
+    tags: groups,s1m0ne,users,ansible,always
+    group:
+      name: ansible
+      state: present

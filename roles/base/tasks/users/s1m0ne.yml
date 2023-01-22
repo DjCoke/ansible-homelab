@@ -1,0 +1,16 @@
+- name: users | s1m0ne | add public key
+  tags: dotfiles,s1m0ne,ssh,ssh-keys,users
+  authorized_key:
+    user: s1m0ne
+    key: "{{ item }}"
+  with_file:
+    - users/s1m0ne/ssh/s1m0ne_id_ed25519.pub
+
+- name: users | s1m0ne | add sudoers file
+  tags: settings,s1m0ne,sudo,system,users
+  copy:
+    src: users/sudoers_s1m0ne
+    dest: /etc/sudoers.d/s1m0ne
+    owner: root
+    group: root
+    mode: 0440

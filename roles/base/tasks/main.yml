@@ -1,40 +1,32 @@
- - name: add ssh key for s1m0ne
-   authorized_key:
-     user: s1m0ne
-     key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZTnWTe0jnZiyrifnUbiEdgBjZpTno0C3IxT5cVasmw ansible"
+# Load distro-specific variables
+- include_vars: "{{ ansible_distribution }}.yml"
+  tags: always
 
- - name: install common command line tools
-   become: yes
-   apt:
-     name:
-       - bat
-         # - btop
-       - curl
-       - dos2unix
-         # - duf
-       - fd-find
-       - fzf
-       - git-absorb
-       - git-extras
-         # - glances
-       - graphviz
-       - grc
-       - hexyl
-       - htop
-       - httpie
-         # - hyperfine
-       - jq
-       - lnav
-       - mtr
-       - multitail
-       - neofetch
-       - ripgrep
-       - shellcheck
-         # - shfmt
-       - silversearcher-ag
-       - ssh-tools
-       - tree
-       - vim-airline
-       - wget
-       - zoxide
-     state: present
+- block:
+  # Make sure users exist on the system
+  - import_tasks: users/erwin.yml
+  - import_tasks: users/root.yml
+  - import_tasks: users/s1m0ne.yml
+
+  # Set up the ansible environment
+  - import_tasks: ansible_setup.yml
+
+  # install software
+  - import_tasks: software/repositories.yml
+  #  - import_tasks: software/packages_development.yml
+  #  - import_tasks: software/packages_cleanup.yml
+  #- import_tasks: software/packages_pip.yml
+  #- import_tasks: software/packages_utilities.yml
+
+  # Perform remaining tasks:
+  #  - import_tasks: system_setup/clock.yml
+  #  - import_tasks: system_setup/cron.yml
+  # - import_tasks: system_setup/locale.yml
+  # - import_tasks: system_setup/logging.yml
+  # - import_tasks: system_setup/memory.yml
+  # - import_tasks: system_setup/microcode.yml
+  # - import_tasks: system_setup/openssh.yml
+  # - import_tasks: system_setup/scripts.yml
+
+    # rescue:
+    # - set_fact: task_failed=true
