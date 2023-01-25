@@ -37,6 +37,20 @@
   roles:
     - proxmox
 
+- hosts: file_servers
+  tags: file_servers
+  become: true
+  roles:
+    - file_servers
+
+- hosts: servers
+  tags: servers
+  become: true
+  roles:
+    - servers
+
+
+
 # end of run cleanup and reporting
 - hosts: all
   become: true

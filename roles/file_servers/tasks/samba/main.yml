@@ -1,0 +1,137 @@
+---
+# roles/samba/defaults/main.yml
+# file_servers will have to have samba
+# Using parts of the code from vladgh/ansible-collection-vladgh-samba
+#
+# See for instructions their code
+#
+# TODO: limiting which users?
+- name: file server | samba | creating pam users from samba_users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    password: "{{ item.password | password_hash('sha512') }}" 
+    update_password: on_create  
+  with_items: "{{ samba_users }}"
+  no_log: true 
+  tags: samba
+
+- name: file server | samba | install samba
+  ansible.builtin.package:
+    name: "{{ samba_packages }}"
+    state: present
+  tags: samba
+
+- name: file server | samba | Install Samba VFS extensions packages
+  ansible.builtin.package:
+    name: "{{ samba_vfs_packages }}"
+    state: present
+  when: samba_vfs_packages is defined
+  tags: samba
+
+- name: file server | samba | checking version (for patches)
+  ansible.builtin.shell: >
+    set -o nounset -o pipefail -o errexit &&
+    smbd --version | sed 's/Version //'
+  args:
+    executable: /bin/bash
+  register: samba_version
+  changed_when: false
+  tags: samba
+
+- name: file server | samba | Create Samba shares root directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ samba_shares_root }}"
+    owner: root
+    group: root
+    mode: '0755'
+  when: samba_shares|length > 0
+  tags: samba
+
+- name: file server | samba | Create share directories
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.path | default([samba_shares_root, item.name] | join('/')) }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('users') }}"
+    mode: "{{ item.directory_mode | default('0775') }}"
+    setype: "{{ item.setype | default('samba_share_t') }}"
+  with_items: "{{ samba_shares }}"
+  tags: samba
+
+- name: file server | samba | Samba configuration
+  ansible.builtin.template:
+    dest: "{{ samba_configuration }}"
+    src: smb.conf.j2
+    validate: 'testparm -s %s'
+    mode: '0644'
+  notify:
+    - Restart Samba services
+  tags: samba
+
+- name: file server | samba | Install global include file
+  ansible.builtin.template:
+    src: "{{ samba_global_include }}"
+    dest: "{{ samba_configuration_dir }}"
+    validate: 'testparm -s %s'
+    mode: '0644'
+  when: samba_global_include is defined
+  notify:
+    - Restart Samba services
+  tags: samba
+
+- name: file server | samba | Install home include file
+  ansible.builtin.template:
+    src: "{{ samba_homes_include }}"
+    dest: "{{ samba_configuration_dir }}"
+    validate: 'testparm -s %s'
+    mode: '0644'
+  when: samba_homes_include is defined
+  notify:
+    - Restart Samba services
+  tags: samba
+
+- name: file server | samba | Install share specific include files
+  ansible.builtin.template:
+    src: "{{ item.include_file }}"
+    dest: "{{ samba_configuration_dir }}"
+    validate: 'testparm -s %s'
+    mode: '0644'
+  when: item.include_file is defined
+  notify:
+    - Restart Samba services
+  with_items: "{{ samba_shares }}"
+  tags: samba
+
+- name: file server | samba | Create username map file if needed
+  ansible.builtin.template:
+    dest: "{{ samba_username_map_file }}"
+    src: smbusers.j2
+    mode: '0644'
+  notify:
+    - Restart Samba services
+  when: samba_username_map is defined
+  tags: samba
+
+- name: file server | samba | Start Samba service(s)
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items: "{{ samba_services }}"
+  tags: samba
+
+- name: file server | samba | Create Samba users if they don't exist yet
+  ansible.builtin.shell: >
+    set -o nounset -o pipefail -o errexit &&
+    (pdbedit --user={{ item.name }} 2>&1 > /dev/null) \
+    || (echo '{{ item.password }}'; echo '{{ item.password }}') \
+    | smbpasswd -s -a {{ item.name }}
+  args:
+    executable: /bin/bash
+  with_items: "{{ samba_users }}"
+  no_log: true
+  register: create_user_output
+  changed_when: "'Added user' in create_user_output.stdout"
+  tags: samba
+

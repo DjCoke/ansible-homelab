@@ -17,15 +17,5 @@ unattended_upgrades: true
 web_server: false
 proxmox_server: false
 
-# Samba configuration of this fileserver
-samba_shares:
-  - name: media
-    comment: 'Media Tank'
-    group: users
-    write_list: +users
-    include_file: media-include.conf
-          
-samba_users:
-  - name: erwin
-    password: "{{ erwin_password }}"
-
+# pihole
+pihole: true

@@ -1,6 +1,3 @@
-# user related vars
-erwin_passwd: '!'
-
 # Install ohmyzsh for the defined users.
 # Default: the linux user running Ansible
 ohmyzsh_users:

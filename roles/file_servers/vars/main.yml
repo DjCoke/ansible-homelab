@@ -1,0 +1,34 @@
+# roles/samba/defaults/main.yml
+# file_servers will have to have samba
+# Using parts of the code from vladgh/ansible-collection-vladgh-samba
+#
+# See for instructions their code
+#
+---
+
+samba_workgroup: 'WORKGROUP'
+samba_server_string: 'Fileserver %m'
+samba_log_size: 5000
+samba_log_level: 0
+samba_interfaces: []
+samba_security: 'user'
+samba_passdb_backend: 'tdbsam'
+samba_map_to_guest: 'never'
+samba_load_printers: false
+samba_printer_type: 'cups'
+samba_cups_server: 'localhost:631'
+samba_load_homes: false
+samba_create_varwww_symlinks: false
+samba_shares_root: '/data'
+samba_apple_extensions: true
+
+
+  # share are configured per server in host_vars
+  # set samba_shares and samba_users
+
+samba_wins_support: 'yes'
+samba_local_master: 'yes'
+samba_domain_master: 'yes'
+samba_preferred_master: 'yes'
+  # not needed anymore and we use Samba from recent repo's
+samba_mitigate_cve_2017_7494: false

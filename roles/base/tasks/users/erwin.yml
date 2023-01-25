@@ -1,18 +1,19 @@
-- name: users |erwin | create group
+- name: users | erwin | create group
   tags: groups,erwin,users
   group:
     name: erwin
     state: present
 
 - name: users | erwin | create user
-  tags: erwin,sudo,users
+  tags: erwin,sudo,users,samba
   user:
     name: erwin
     group: erwin
     groups: adm,ansible,{{ sudo_group }},users
     state: present
     comment: "Erwin van de Glind"
-    password: "{{ erwin_passwd }}"
+    password: "{{ erwin_password | password_hash('sha512') }}"
+    update_password: on_create
 
 - name: users | erwin | erwin | add sudoers file
   tags: erwin,settings,simone,sudo,system,users

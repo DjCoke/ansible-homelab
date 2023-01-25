@@ -16,3 +16,29 @@ raspberry_pi: false
 unattended_upgrades: true
 web_server: false
 proxmox_server: false
+
+# samba configuration of fileserver Samba
+
+samba_shares:
+  - name: TimeMachine
+    comment: 'Share useable as a TimeMachine backup target on MacOS'
+    vfs_objects:
+      - name: fruit
+        options:
+           - name: time machine
+             value: 'yes'
+      - name: streams_xattr
+    path: /data/timemachine
+    write_list: timemachine
+    owner: timemachine
+    group: timemachine
+    public: 'no'
+    guest_ok: 'no'
+    browseable: 'no'
+          
+samba_users:
+  - name: erwin
+    password: "{{ erwin_password }}"
+  - name: timemachine
+    password: "{{ timemachine_password }}"
+

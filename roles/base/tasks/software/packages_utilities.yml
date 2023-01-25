@@ -24,6 +24,7 @@
       - rsync
       - screen
       - sshfs
+      - sysstat
       - tmux
       - traceroute
       - unzip
