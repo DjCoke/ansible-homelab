@@ -9,6 +9,9 @@
 - block:
   - import_tasks: pihole/main.yml
     when: pihole
+  - import_tasks: docker/main.yml
+    when: docker_server
+
 
   rescue:
     - set_fact: task_failed=true

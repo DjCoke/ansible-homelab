@@ -17,6 +17,7 @@
   notify:  Restart Unbound services    
 
 - name: servers | pihole | removing the unbound-resolv service
+  tags: pihole,unbound
   ansible.builtin.service:
     name: unbound-resolvconf
-    state: disabled
+    state: stopped
