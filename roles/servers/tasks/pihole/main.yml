@@ -1,0 +1,22 @@
+---
+- name: servers | pihole | install pihole packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ pihole_packages }}"
+  tags: pihole,packages
+
+- name: servers | pihole | installing unbound config
+  tags: pihole,unbound
+  copy:
+    src: files/unbound-pi-hole.conf
+    dest: /etc/unbound/unbound.conf.d/pi-hole.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:  Restart Unbound services    
+
+- name: servers | pihole | removing the unbound-resolv service
+  ansible.builtin.service:
+    name: unbound-resolvconf
+    state: disabled
