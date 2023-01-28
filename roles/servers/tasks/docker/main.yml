@@ -1,0 +1,68 @@
+---
+- name: servers | docker | install aptitude
+  apt:
+    name: aptitude
+    state: latest
+    update_cache: true
+  tags: docker,packages
+          
+- name: servers | docker | install docker packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ docker_packages }}"
+  tags: docker,packages
+
+- name: servers | docker | Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  tags: docker,packages
+
+- name: servers | docker | Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  tags: docker,packages
+
+- name: servers | docker | Update apt and install docker-ce
+  apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+  tags: docker,packages
+
+- name: servers | docker | Install Docker Module for Python
+  pip:
+    name: docker
+  tags: docker,packages
+
+- name: Pull default Docker image
+  community.docker.docker_image:
+    name: "{{ default_container_image }}"
+    source: pull
+  tags: docker,packages
+
+- name: servers | docker | Create default containers
+  community.docker.docker_container:
+    name: "{{ default_container_name }}{{ item }}"
+    image: "{{ default_container_image }}"
+    command: "{{ default_container_command }}"
+    state: present
+  with_sequence: count={{ container_count }}
+  tags: docker,packages
+
+- name: servers | docker | Delete the just created containers
+  community.docker.docker_container:
+    name: "{{ default_container_name }}{{ item }}"
+    state: absent
+  with_sequence: count={{ container_count }}
+  tags: docker,packages
+
+- name: servers | docker | Finalisation
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ docker_final_packages }}"
+  tags: docker,packages,debug
+

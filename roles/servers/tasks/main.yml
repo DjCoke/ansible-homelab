@@ -11,7 +11,8 @@
     when: pihole
   - import_tasks: docker/main.yml
     when: docker_server
-
+  - import_tasks: portainer/main.yml
+    when: portainer
 
   rescue:
     - set_fact: task_failed=true

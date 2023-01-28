@@ -22,3 +22,6 @@ pihole: true
 
 # docker
 docker_server: true
+
+# portainer
+portainer: false
