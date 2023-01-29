@@ -1,0 +1,21 @@
+---
+# Insired and based on
+# https://git.zotha.de/ansible-roles/pihole/-/blob/master/tasks/gravity_sync.yml
+#
+#
+#
+#
+- name: servers | pihole | Create gravity-sync user
+  user:
+    name: gravity-sync
+    shell: /bin/bash
+    home: /opt/gravity-sync
+    system: true
+
+- name: servers | pihole | Create gravity-sync ssh and log directory
+  file:
+    path: /opt/gravity-sync/.ssh
+    state: directory
+    owner: gravity-sync
+
+      

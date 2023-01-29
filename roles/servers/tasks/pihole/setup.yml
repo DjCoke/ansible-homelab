@@ -1,0 +1,32 @@
+---
+# https://codeberg.org/ansible/pihole
+# For the unattended install to work as intended (i.e., unattended)
+# we must place setupVars.conf into place *before* running the installer
+# This means we also need to create the pihole user/group ourselves
+
+- name: servers | pihole| Create pihole user in PAM
+  tags: pihole
+  ansible.builtin.user:
+    name: "{{ user_pihole }}"
+    state: present
+    system: yes
+    shell: /usr/sbin/nologin
+
+# this task requires the user_pihole user/group to exist, fails otherwise
+- name: servers | pihole | Create Pi-Hole configuration directory
+  tags: pihole
+  ansible.builtin.file:
+    name: "{{ fspath_pihole_config }}"
+    state: directory
+    owner: "{{ user_pihole }}"
+    group: "{{ user_pihole }}"
+    mode: 0755
+
+- name: servers | pihole | Prepare Pi-Hole configuration
+  tags: pihole
+  ansible.builtin.template:
+    src: "setupVars.conf.j2"
+    dest: "{{ fspath_pihole_config }}/setupVars.conf"
+    owner: root
+    group: root
+    mode: 0644

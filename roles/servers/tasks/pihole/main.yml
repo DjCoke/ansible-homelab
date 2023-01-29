@@ -6,6 +6,32 @@
   with_items: "{{ pihole_packages }}"
   tags: pihole,packages
 
+- name: servers | pihole | Check Pi-Hole is installed
+  tags: pihole
+  ansible.builtin.stat:
+    path: "/usr/local/bin/pihole"
+  register: pihole_binary
+
+# https://codeberg.org/ansible/pihole
+
+- name: servers | pihole | Setup pihole for installation
+  tags: pihole
+  ansible.builtin.import_tasks: setup.yml
+  when: not pihole_binary.stat.exists
+
+- name: servers | pihole | Install pihole from repo
+  tags: pihole
+  ansible.builtin.import_tasks: install.yml
+  when: not pihole_binary.stat.exists
+
+# https://git.zotha.de/ansible-roles/pihole
+- name: servers | pihole | setup gravity-sync
+  tags: pihole
+  include_tasks: gravity_sync.yml
+  when: pihole_gravity_sync|bool
+  
+
+
 - name: servers | pihole | installing unbound config
   tags: pihole,unbound
   copy:

@@ -8,7 +8,7 @@
 
 - block:
   - import_tasks: pihole/main.yml
-    when: pihole
+    when: pihole_server
   - import_tasks: docker/main.yml
     when: docker_server
   - import_tasks: portainer/main.yml
