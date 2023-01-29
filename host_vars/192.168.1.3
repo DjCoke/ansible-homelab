@@ -19,15 +19,17 @@ proxmox_server: false
 
 # pihole
 pihole_server: true
-pihole_gravity_sync: true
+pihole_gravity_sync: false
 pihole:
   network:
     interface: "eth0" 
   dns:
     0: "127.0.0.1#5335"
-    
+
 # docker_server
 docker_server: false
 
 # portainer
 portainer: false
+
+debugging: true
