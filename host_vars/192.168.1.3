@@ -3,7 +3,7 @@ branch: master
 
 ansible_cron_minute: "40"
 ssh_port: 22
-ssh_users: "erwin s1m0ne"
+ssh_users: "erwin s1m0ne gravity-sync"
 
 # platform-specific
 linode_instance: false
@@ -19,12 +19,15 @@ proxmox_server: false
 
 # pihole
 pihole_server: true
-pihole_gravity_sync: false
+pihole_gravity_pull: true
 pihole:
   network:
     interface: "eth0" 
   dns:
     0: "127.0.0.1#5335"
+pihole_gravity_sync_remote_host: "192.168.1.2"
+pihole_gravity_sync_remote_user: "gravity-sync"
+
 
 # docker_server
 docker_server: false

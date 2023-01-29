@@ -1,0 +1,12 @@
+# {{ansible_managed}}
+
+# Primary Pi-hole host (in IP or DNS name)
+REMOTE_HOST='{{pihole_gravity_sync_remote_host}}'
+
+# User account on primary with SUDO rights
+REMOTE_USER='{{pihole_gravity_sync_remote_user}}'
+
+### SSH Customization
+GS_ETC_PATH='/etc/gravity-sync'
+GS_SSH_PKIF='/opt/gravity-sync/.ssh/id_rsa'
+GS_LOCAL_REPO='/opt/gravity-sync/.gs'

@@ -4,3 +4,8 @@
   ansible.builtin.service:
     name: unbound
     state: restarted
+
+- name: restart pihole-ftl
+  systemd:
+    name: pihole-FTL
+    state: restarted

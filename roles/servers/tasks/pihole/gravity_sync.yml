@@ -6,16 +6,90 @@
 #
 #
 - name: servers | pihole | Create gravity-sync user
+  tags: pihole,gravity-sync
   user:
     name: gravity-sync
     shell: /bin/bash
     home: /opt/gravity-sync
     system: true
 
+# gravity-sync expects gravity-sync user in wheel or sudo group      
+- name: servers | pihole | place gravity-sync user in sudo group
+  tags: gravity-sync,pihole
+  user:
+    name: gravity-sync
+    groups: "{{ sudo_group }}" 
+    state: present
+
 - name: servers | pihole | Create gravity-sync ssh and log directory
+  tags: pihole,gravity-sync
   file:
     path: /opt/gravity-sync/.ssh
     state: directory
     owner: gravity-sync
 
-      
+- name: servers | pihole | Create gravity-etc directory
+  tags: pihole,gravity-sync
+  file:
+    path: /etc/gravity-sync
+    state: directory
+    owner: root  
+
+- name: servers | pihole | Copy ssh private key for gravity-sync
+  tags: pihole,gravity-sync
+  copy:
+    content: "{{pihole_gravity_sync_ssh_private_key}}"
+    dest: /opt/gravity-sync/.ssh/id_rsa
+    mode: "0600"
+    owner: gravity-sync
+
+- name: servers | pihole | Copy ssh public key for gravity-sync
+  tags: pihole,gravity-sync
+  authorized_key:
+    user: gravity-sync
+    key: "{{ item }}"
+  with_file:
+    - pihole/gravity-sync/id_rsa.pub
+
+- name: servers | pihole | add gravity-sync sudoers file
+  tags: sudo,pihole,gravity-sync
+  copy:
+    src: pihole/gravity-sync/sudoers_gravity-sync
+    dest: /etc/sudoers.d/gravity-sync
+    owner: root
+    group: root
+    mode: 0440
+
+
+- name: servers | pihole | Clone the gravity-sync repo
+  tags: pihole,gravity-sync
+  ansible.builtin.git:
+    repo: https://github.com/vmstan/gravity-sync.git
+    depth: 1
+    dest: "/opt/gravity-sync/.gs"
+    version: master
+
+- name: servers | pihole | Copy gravity-sync
+  tags: pihole,gravity-sync
+  ansible.builtin.copy:
+    src: /opt/gravity-sync/.gs/gravity-sync
+    dest: /usr/local/bin/gravity-sync
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: servers | pihole | Configure gravity-sync
+  tags: pihole,gravity-sync
+  template:
+    src: gravity-sync.conf.j2
+    dest: /etc/gravity-sync/gravity-sync.conf
+
+- name: servers | pihole | Add job that runs every 5 minutes
+  tags: pihole,gravity-sync
+  ansible.builtin.cron:
+    name: "sync pihole via gravity-sync"
+    minute: "5"
+    job: "/usr/local/bin/gravity-sync pull > /opt/gravity-sync/gravity-sync.cron"
+    user: gravity-sync
+  when: pihole_gravity_pull  

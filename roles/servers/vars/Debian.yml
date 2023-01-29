@@ -1,2 +1,3 @@
-# roles/samba/vars/os_Debian.yml
+# roles/servers/vars/os_Debian.yml
 ---
+sudo_group: sudo
