@@ -1,57 +1,49 @@
---- 
+---
 - hosts: all
   become: true
   pre_tasks:
+    - name: Install Updates (CentOS)
+      tags: always
+      dnf:
+        update_only: yes
+        update_cache: yes
+      when: ansible_distribution == "CentOS"
 
-  - name: Install Updates (CentOS)
-    tags: always
-    dnf:
-     update_only: yes
-     update_cache: yes
-    when: ansible_distribution == "CentOS"
+    - name: Install Updates (Ubuntu and Debian)
+      tags: always
+      apt:
+        upgrade: dist
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 
-  - name: Install Updates (Ubuntu and Debian)
-    tags: always
-    apt:
-     upgrade: dist
-     update_cache: yes
-    when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian" 
-  
 - hosts: all
   become: true
   tasks:
+    - name: Make sure that sudo exists (proxmox does not by default)
+      tags: always
+      package:
+        name: sudo
+        state: present
+      when: ansible_distribution == "Debian"
 
-  - name: Make sure that sudo exists (proxmox does not by default)
-    tags: always
-    package:
-      name: sudo
-      state: present
-    when: ansible_distribution == "Debian"
- 
-  - name: groups | ansible | create group ansible
-    tags: groups,s1m0ne,users,ansible,always
-    group:
-      name: ansible
-      state: present
+    - name: Create s1m0ne user
+      tags: always
+      user:
+        name: s1m0ne
+        groups: root
+        uid: 1000
 
-  - name: Create s1m0ne user
-    tags: always
-    user:
-      name: s1m0ne
-      groups: root,ansible
-  
-  - name: Add SSH Key for s1m0ne
-    tags: always
-    authorized_key:
-      user: s1m0ne
-      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZTnWTe0jnZiyrifnUbiEdgBjZpTno0C3IxT5cVasmw ansible"
+    - name: Add SSH Key for s1m0ne
+      tags: always
+      authorized_key:
+        user: s1m0ne
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDZTnWTe0jnZiyrifnUbiEdgBjZpTno0C3IxT5cVasmw ansible"
 
-  - name: Add sudoers File for s1m0ne
-    tags: always
-    copy:
-      src: sudoers_s1m0ne
-      dest: /etc/sudoers.d/s1m0ne
-      owner: root
-      group: root
-      mode: 0440
-
+    - name: Add sudoers File for s1m0ne
+      tags: always
+      copy:
+        src: sudoers_s1m0ne
+        dest: /etc/sudoers.d/s1m0ne
+        owner: root
+        group: root
+        mode: 0440

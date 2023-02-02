@@ -23,7 +23,7 @@
   file:
     path: /var/log/ansible.log
     owner: s1m0ne
-    group: ansible
+    group: root
     mode: 0664
     state: touch
   changed_when: False
@@ -42,4 +42,3 @@
   file:
     path: /etc/ansible
     state: absent
-

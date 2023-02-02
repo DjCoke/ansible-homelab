@@ -19,5 +19,6 @@
   tags: s1m0ne
   user:
     name: s1m0ne
-    groups: ansible,root,{{ sudo_group }} 
+    groups: users,root,{{ sudo_group }}
+    uid: 1000
     state: present

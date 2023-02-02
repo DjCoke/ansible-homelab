@@ -24,7 +24,14 @@ samba_shares:
     group: users
     write_list: +users
     include_file: media-include.conf
-          
+  - name: glind_photos
+    comment: 'Photos Tank'
+    group: users
+    write_list: +users
+    include_file: media-include.conf
+
+
+
 samba_users:
   - name: erwin
     password: "{{ erwin_password }}"

@@ -20,7 +20,7 @@ proxmox_server: false
 # samba configuration of fileserver Samba
 
 samba_shares:
-  - name: TimeMachine
+  - name: Erwin_TM
     comment: 'Share useable as a TimeMachine backup target on MacOS'
     vfs_objects:
       - name: fruit
@@ -28,10 +28,10 @@ samba_shares:
            - name: time machine
              value: 'yes'
       - name: streams_xattr
-    path: /data/timemachine
-    write_list: timemachine
-    owner: timemachine
-    group: timemachine
+    path: /data/erwin_tm
+    write_list: erwin
+    owner: erwin
+    group: erwin   
     public: 'no'
     guest_ok: 'no'
     browseable: 'no'
@@ -39,6 +39,6 @@ samba_shares:
 samba_users:
   - name: erwin
     password: "{{ erwin_password }}"
-  - name: timemachine
-    password: "{{ timemachine_password }}"
+ # - name: timemachine
+ #   password: "{{ timemachine_password }}"
 

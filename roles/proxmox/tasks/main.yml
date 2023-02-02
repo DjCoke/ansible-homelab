@@ -3,7 +3,7 @@
   lineinfile:
     path: /etc/kernel/cmdline
     backrefs: true
-    regexp: '^(((?!quiet intel_iommu=on).)*)$'
+    regexp: "^(((?!quiet intel_iommu=on).)*)$"
     line: '\1 quiet intel_iommu=on'
     state: present
   notify: proxmox-boot-tool
@@ -20,10 +20,26 @@
     group: root
     mode: 0644
   with_items:
-      - vfio
-      - vfio_iommu_type1
-      - vfio_pci
-      - vfio_virqfd
+    - vfio
+    - vfio_iommu_type1
+    - vfio_pci
+    - vfio_virqfd
   notify:
     - restart systemd-modules-load
 
+# Group lxc_users is mapped inside LXC containers with group 100
+# Make sure that host's users are in this group to access files made within the LXC containers
+- name: servers | proxmox | group lxc_users
+  tags: groups,users,always
+  group:
+    name: lxc_users
+    state: present
+    gid: 100100
+
+# TODO: loop with dict users
+- name: servers | proxmox | adding users to lxc_users group
+  tags: users,always
+  ansible.builtin.user:
+    name: erwin
+    group: lxc_users
+    append: true

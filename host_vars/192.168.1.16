@@ -18,10 +18,12 @@ web_server: false
 proxmox_server: false
 
 # pihole
-pihole: true
+pihole_server: false
 
 # docker
 docker_server: true
 
 # portainer
 portainer: false
+
+debugging: false
