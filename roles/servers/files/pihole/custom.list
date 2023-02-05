@@ -11,3 +11,7 @@
 192.168.1.2 dns1.local.glind.io
 192.168.1.50 coder.local.glind.io
 192.168.1.16 traefik-dashboard.local.glind.io
+192.168.1.16 fotos.local.glind.io
+192.168.1.16 kirito.local.glind.io
+192.168.1.16 syncthing.local.glind.io
+192.168.1.17 syncssh.local.glind.io
