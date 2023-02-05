@@ -1,1 +1,49 @@
 ---
+- name: servers | pihole | install pihole packages
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ syncthing_packages }}"
+  tags: syncthing,packages
+
+# https://codeberg.org/zoenglinghou/ansible-role-syncthing/src/branch/main/tasks/main.yml
+# Using its code
+- name: servers | syncthing | Add the release GPG key from syncthing
+  apt_key:
+    url: https://syncthing.net/release-key.gpg
+    keyring: /usr/share/keyrings/syncthing-archive-keyring.gpg
+    state: present
+  tags: syncthing
+
+- name: servers | syncthing | Ensure the repository in stable channel
+  apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable
+    state: present
+  tags: syncthing
+
+- name: servers | syncthing | Ensure syncthing via apt
+  apt:
+    name: syncthing
+    state: latest
+    update_cache: yes
+  tags: syncthing
+
+# https://github.com/L-P/ansible-role-syncthing/blob/master/tasks/setup.yml
+# Using this piece of code
+#
+- name: servers | syncthing | Copy syncthing systemd service
+  copy:
+    src: "syncthing/syncthing.service"
+    dest: "/etc/systemd/system/syncthing@.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: reload systemd
+  tags: syncthing,systemd
+
+- name: servers | syncthing | Enable syncthing for user
+  ansible.builtin.systemd:
+    name: syncthing@erwin.service
+    state: started
+    enabled: true
+  tags: syncthing

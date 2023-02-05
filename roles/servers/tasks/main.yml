@@ -4,15 +4,17 @@
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
-  tags: servers  
+  tags: servers
 
 - block:
-  - import_tasks: pihole/main.yml
-    when: pihole_server
-  - import_tasks: docker/main.yml
-    when: docker_server
-  - import_tasks: portainer/main.yml
-    when: portainer
+    - import_tasks: pihole/main.yml
+      when: pihole_server
+    - import_tasks: docker/main.yml
+      when: docker_server
+    - import_tasks: portainer/main.yml
+      when: portainer
+    - import_tasks: syncthing/main.yml
+      when: syncthing_server
 
   rescue:
     - set_fact: task_failed=true
