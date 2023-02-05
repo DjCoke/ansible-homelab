@@ -30,7 +30,7 @@
   include_tasks: gravity_sync.yml
 
 - name: servers | pihole | installing custom list of local hosts in pihole
-  tags: pihole
+  tags: pihole,update_dns
   copy:
     src: pihole/custom.list
     dest: /etc/pihole/custom.list
@@ -47,7 +47,7 @@
     owner: root
     group: root
     mode: 0644
-  notify:  Restart Unbound services    
+  notify: Restart Unbound services
 
 - name: servers | pihole | removing the unbound-resolv service
   tags: pihole,unbound
