@@ -8,7 +8,7 @@
     state: latest
   when:
     - ansible_pkg_mgr == "apt"
-    - not proxmox_vm
+    - not proxmox_vm and not proxmox_instance
 
 - name: system setup | clock | start and enable systemd-timesyncd
   tags: ntp,system settiings
@@ -16,7 +16,7 @@
     name: systemd-timesyncd
     state: started
     enabled: true
-  when: not proxmox_vm
+  when: not proxmox_vm and not proxmox_instance
 
 - name: system setup | clock | set time zone
   tags: ntp,timezone,system setup

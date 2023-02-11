@@ -10,7 +10,7 @@ linode_instance: false
 microcode_amd_install: false
 microcode_intel_install: false
 proxmox_instance: true
-proxmox_server: false
+proxmox_vm: false
 raspberry_pi: false
 
 
@@ -18,14 +18,9 @@ raspberry_pi: false
 unattended_upgrades: true
 web_server: false
 proxmox_server: false
-
-# pihole
+syncthing_server: false
 pihole_server: false
-
-# docker
 docker_server: true
-
-# portainer
 portainer: false
 
 debugging: false
