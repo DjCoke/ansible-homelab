@@ -10,6 +10,7 @@ linode_instance: false
 microcode_amd_install: false
 microcode_intel_install: true
 proxmox_instance: false
+proxmox_server: true
 raspberry_pi: false
 
 # server?

@@ -1,11 +1,14 @@
+---
+# not proxmox_vm is needed, because on those systems qemu-agent is installed
+#
 - name: system setup | clock | install systemd-timesyncd (ubuntu)
   tags: ntp,system setup
   package:
     name: systemd-timesyncd
     state: latest
-  when: 
+  when:
     - ansible_pkg_mgr == "apt"
-    - not proxmox_instance
+    - not proxmox_vm
 
 - name: system setup | clock | start and enable systemd-timesyncd
   tags: ntp,system settiings
@@ -13,10 +16,10 @@
     name: systemd-timesyncd
     state: started
     enabled: true
-  when: not proxmox_instance
+  when: not proxmox_vm
 
 - name: system setup | clock | set time zone
   tags: ntp,timezone,system setup
   timezone:
     name: "Europe/Amsterdam"
-  when: not proxmox_instance
+  when: not proxmox_vm

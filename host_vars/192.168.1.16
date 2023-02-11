@@ -10,7 +10,9 @@ linode_instance: false
 microcode_amd_install: false
 microcode_intel_install: false
 proxmox_instance: true
+proxmox_server: false
 raspberry_pi: false
+
 
 # server
 unattended_upgrades: true
