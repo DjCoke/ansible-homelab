@@ -19,7 +19,7 @@ web_server: false
 proxmox_server: true
 syncthing_server: false
 pihole_server: false
-docker_server: true
-portainer: true
+docker_server: false
+portainer: false
 
 debugging: false

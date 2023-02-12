@@ -15,6 +15,7 @@
     uid: 1001
     password: "{{ erwin_password | password_hash('sha512') }}"
     update_password: on_create
+    append: true
 
 - name: users | erwin | erwin | add sudoers file
   tags: erwin,settings,simone,sudo,system,users
