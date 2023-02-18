@@ -1,5 +1,5 @@
 ---
-- name: servers | pihole | install pihole packages
+- name: servers | syncthing | install sycnthing packages
   ansible.builtin.package:
     name: "{{ item }}"
     state: latest

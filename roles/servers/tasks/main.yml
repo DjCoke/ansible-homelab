@@ -11,8 +11,6 @@
       when: pihole_server
     - import_tasks: docker/main.yml
       when: docker_server
-    - import_tasks: portainer/main.yml
-      when: portainer
     - import_tasks: docker/apps.yml
       when: docker_server
     - import_tasks: syncthing/main.yml
