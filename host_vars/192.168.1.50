@@ -22,3 +22,6 @@ docker_server: false
 portainer: false
 
 debugging: false
+
+# Specific software
+nvim: true
