@@ -22,6 +22,11 @@ syncthing_server: false
 # samba configuration of fileserver Samba
 
 samba_shares:
+  - name: michelle
+    comment: 'Netwerkschijf Michelle'
+    group: users
+    write_list: +users
+    include_file: media-include.conf
   - name: Erwin_TM
     comment: 'Share useable as a TimeMachine backup target on MacOS'
     vfs_objects:
@@ -37,10 +42,25 @@ samba_shares:
     public: 'no'
     guest_ok: 'no'
     browseable: 'no'
-          
+  - name: Michelle_TM
+    comment: 'Share useable as a TimeMachine backup target on MacOS'
+    vfs_objects:
+      - name: fruit
+        options:
+           - name: time machine
+             value: 'yes'
+      - name: streams_xattr
+    path: /data/michelle_tm
+    write_list: michelle
+    owner: michelle
+    group: michelle   
+    public: 'no'
+    guest_ok: 'no'
+    browseable: 'no'
+
 samba_users:
   - name: erwin
     password: "{{ erwin_password }}"
- # - name: timemachine
- #   password: "{{ timemachine_password }}"
+  - name: michelle
+    password: "{{ michelle_password }}"
 

@@ -42,4 +42,6 @@ samba_shares:
 samba_users:
   - name: erwin
     password: "{{ erwin_password }}"
+  - name: michelle
+    password: "{{ michelle_password }}"
 

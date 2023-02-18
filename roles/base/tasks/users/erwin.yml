@@ -2,6 +2,7 @@
   tags: groups,erwin,users
   group:
     name: erwin
+    gid: 1001
     state: present
 
 - name: users | erwin | create user

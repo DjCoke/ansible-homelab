@@ -1,0 +1,19 @@
+- name: users | michelle | create group
+  tags: groups,michelle,users
+  group:
+    name: michelle
+    gid: 1002
+    state: present
+
+- name: users | michelle | create user
+  tags: michelle,users,samba
+  user:
+    name: michelle
+    group: michelle
+    groups: users
+    state: present
+    comment: "Michelle van de Glind"
+    uid: 1002
+    password: "{{ michelle_password | password_hash('sha512') }}"
+    update_password: on_create
+    append: true
