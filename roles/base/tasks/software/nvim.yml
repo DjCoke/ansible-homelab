@@ -1,0 +1,15 @@
+---
+- name: Neo Vim setup | Neo VIM | install nvim required packages
+  tags: packages,nvim,vim
+  package:
+    state: latest
+    name:
+      - software-properties-common
+      - python-software-properties
+  when: ansible_distribution == "Ubuntu"
+# - name: Neo Vim setup | Neo VIM | install nvim
+#   tags: packages,nvim,vim
+#   package:
+#     state: latest
+#     name:
+#       - "{{ neovim_package }}"
