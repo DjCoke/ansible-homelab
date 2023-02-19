@@ -10,3 +10,8 @@ p10k_users:
 
 zsh_bin_path: /usr/bin/zsh
 fonts_path: /usr/share/fonts/TTF
+
+download_dir: /tmp
+nvim_dir: /opt
+nvim_version: v0.8.3
+nvim_checksum: sha256:58ac03b345e8675e13322f8c7135906ce26a1ca7a87d041344d64b207be7bedf
