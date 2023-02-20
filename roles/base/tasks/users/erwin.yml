@@ -63,20 +63,67 @@
     mode: 0600
   with_items:
     - { src: ".config/nvim/init.lua", dest: ".config/nvim/init.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins-setup.lua", dest: ".config/nvim/lua/erwin/plugins-setup.lua" }
-    - { src: ".config/nvim/lua/erwin/core/colorscheme.lua", dest: ".config/nvim/lua/erwin/core/colorscheme.lua" }
-    - { src: ".config/nvim/lua/erwin/core/keymaps.lua", dest: ".config/nvim/lua/erwin/core/keymaps.lua" }
-    - { src: ".config/nvim/lua/erwin/core/options.lua", dest: ".config/nvim/lua/erwin/core/options.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/autopairs.lua", dest: ".config/nvim/lua/erwin/plugins/autopairs.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/comment.lua", dest: ".config/nvim/lua/erwin/plugins/comment.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/gitsigns.lua", dest: ".config/nvim/lua/erwin/plugins/gitsigns.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/lualine.lua", dest: ".config/nvim/lua/erwin/plugins/lualine.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/nvim-cmp.lua", dest: ".config/nvim/lua/erwin/plugins/nvim-cmp.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/nvim-tree.lua", dest: ".config/nvim/lua/erwin/plugins/nvim-tree.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/telescope.lua", dest: ".config/nvim/lua/erwin/plugins/telescope.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/treesitter.lua", dest: ".config/nvim/lua/erwin/plugins/treesitter.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/lsp/lspconfig.lua", dest: ".config/nvim/lua/erwin/plugins/lsp/lspconfig.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/lsp/lspsaga.lua", dest: ".config/nvim/lua/erwin/plugins/lsp/lspsaga.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/lsp/mason.lua", dest: ".config/nvim/lua/erwin/plugins/lsp/mason.lua" }
-    - { src: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua", dest: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua" }
-    
+    - {
+        src: ".config/nvim/lua/erwin/plugins-setup.lua",
+        dest: ".config/nvim/lua/erwin/plugins-setup.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/core/colorscheme.lua",
+        dest: ".config/nvim/lua/erwin/core/colorscheme.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/core/keymaps.lua",
+        dest: ".config/nvim/lua/erwin/core/keymaps.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/core/options.lua",
+        dest: ".config/nvim/lua/erwin/core/options.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/autopairs.lua",
+        dest: ".config/nvim/lua/erwin/plugins/autopairs.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/comment.lua",
+        dest: ".config/nvim/lua/erwin/plugins/comment.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/gitsigns.lua",
+        dest: ".config/nvim/lua/erwin/plugins/gitsigns.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/lualine.lua",
+        dest: ".config/nvim/lua/erwin/plugins/lualine.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/nvim-cmp.lua",
+        dest: ".config/nvim/lua/erwin/plugins/nvim-cmp.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/nvim-tree.lua",
+        dest: ".config/nvim/lua/erwin/plugins/nvim-tree.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/telescope.lua",
+        dest: ".config/nvim/lua/erwin/plugins/telescope.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/treesitter.lua",
+        dest: ".config/nvim/lua/erwin/plugins/treesitter.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/lsp/lspconfig.lua",
+        dest: ".config/nvim/lua/erwin/plugins/lsp/lspconfig.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/lsp/lspsaga.lua",
+        dest: ".config/nvim/lua/erwin/plugins/lsp/lspsaga.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/lsp/mason.lua",
+        dest: ".config/nvim/lua/erwin/plugins/lsp/mason.lua",
+      }
+    - {
+        src: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua",
+        dest: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua",
+      }
