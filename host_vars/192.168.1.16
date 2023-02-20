@@ -23,4 +23,7 @@ pihole_server: false
 docker_server: true
 portainer: false
 
+# Specific software
+nvim: true
+
 debugging: false
