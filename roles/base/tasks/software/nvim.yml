@@ -46,9 +46,9 @@
     backrefs: yes
     regexp: 'PATH=(["]*)((?!.*?{{ nvim_dir }}/nvim-linux64/bin).*?)(["]*)$'
     line: 'PATH=\1\2:{{ nvim_dir }}/nvim-linux64/bin\3'
-# - name: Neo Vim setup | Neo VIM | install nvim
-#   tags: packages,nvim,vim
-#   package:
-#     state: latest
-#     name:
-#       - "{{ neovim_package }}"
+
+- name: Install "treesitter" node.js package globally.
+  tags: packages,nvim,vim
+  npm:
+    name: tree-sitter-cli
+    global: yes
