@@ -5,19 +5,21 @@
   become: true
   pre_tasks:
     - name: Install Updates (CentOS)
-      tags: always
+      tags: pre_tasks, always
       dnf:
         update_cache: true
       changed_when: false
       when: ansible_distribution == "CentOS"
 
     - name: Install Updates (Ubuntu / Debian)
-      tags: always
+      tags:
+        - pre_tasks
+        - always
       apt:
         update_cache: true
         cache_valid_time: 3600
       changed_when: false
-      when: ansible_pkg_mgr == "apt"
+      when: ansible_pkg_mgr == "apt" and (skip_pre_tasks is not defined or not skip_pre_tasks)
 
 # run roles
 - hosts: all
@@ -25,7 +27,7 @@
   become: true
   roles:
     - base
-  
+
 - hosts: workstations
   tags: workstations
   become: true
@@ -50,37 +52,35 @@
   roles:
     - servers
 
-
-
 # end of run cleanup and reporting
 - hosts: all
   become: true
   tasks:
-  - name: cleanup package cache (debian and ubuntu)
-    tags: always
-    apt:
-      autoclean: yes
-    changed_when: false
-    when: ansible_pkg_mgr == "apt"
+    - name: Cleanup package cache (debian and ubuntu)
+      tags: always
+      apt:
+        autoclean: true
+      changed_when: false
+      when: ansible_pkg_mgr == "apt"
 
-  - name: autoremove orphan packages (debian and ubuntu)
-    tags: always
-    apt:
-      autoremove: yes
-      purge: yes
-    when: ansible_pkg_mgr == "apt"
+    - name: Autoremove orphan packages (debian and ubuntu)
+      tags: always
+      apt:
+        autoremove: true
+        purge: true
+      when: ansible_pkg_mgr == "apt"
 
-  - name: send completion alert
-    include_tasks: playbooks/send_completion_alert.yml
-    tags: always
-    when:
-      - task_failed is not defined
-      - debugging is not defined
+    - name: Send completion alert
+      include_tasks: playbooks/send_completion_alert.yml
+      tags: always
+      when:
+        - task_failed is not defined
+        - debugging is not defined
 
-  - name: send failure alert
-    include_tasks: playbooks/send_failure_alert.yml
-    tags: always
-    when:
-      - task_failed is defined
-      - task_failed == true
-      - debugging is not defined
+    - name: Send failure alert
+      include_tasks: playbooks/send_failure_alert.yml
+      tags: always
+      when:
+        - task_failed is defined
+        - task_failed == true
+        - debugging is not defined

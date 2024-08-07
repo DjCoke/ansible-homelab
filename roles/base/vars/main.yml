@@ -2,7 +2,7 @@
 # Default: the linux user running Ansible
 ohmyzsh_users:
   - erwin
- 
+
 # Install p10k for the following linux users
 # Default: the linux user running Ansible
 p10k_users:
@@ -15,3 +15,20 @@ download_dir: /tmp
 nvim_dir: /opt
 nvim_version: v0.8.3
 nvim_checksum: sha256:58ac03b345e8675e13322f8c7135906ce26a1ca7a87d041344d64b207be7bedf
+
+# Bron: https://github.com/enix/ansible-proxmox-ve/blob/master/vars/main.yml
+#
+
+proxmox_ve__apt_repo_key:
+  bookworm: "http://download.proxmox.com/debian/proxmox-release-bookworm.gpg"
+  bullseye: "http://download.proxmox.com/debian/proxmox-release-bullseye.gpg"
+  buster: "http://download.proxmox.com/debian/proxmox-ve-release-6.x.gpg"
+  stretch: "http://download.proxmox.com/debian/proxmox-ve-release-5.x.gpg"
+  jessie: "http://download.proxmox.com/debian/proxmox-ve-release-4.x.gpg"
+proxmox_ve__apt_repo_pve_no_subscription: "deb http://download.proxmox.com/debian {{ ansible_distribution_release }} pve-no-subscription"
+proxmox_ve__apt_repo_pve_enterprise: "deb https://enterprise.proxmox.com/debian/pve {{ ansible_distribution_release }} pve-enterprise"
+proxmox_ve__apt_repo_todel:
+  - pve-enterprise.list
+  - pve-install-repo.list
+  - proxmox.list
+  - ceph.list

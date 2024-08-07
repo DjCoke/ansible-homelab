@@ -2,7 +2,6 @@
   tags: groups,erwin,users
   group:
     name: erwin
-    gid: 1001
     state: present
 
 - name: users | erwin | create user
@@ -13,7 +12,6 @@
     groups: adm,{{ sudo_group }},users
     state: present
     comment: "Erwin van de Glind"
-    uid: 1001
     password: "{{ erwin_password | password_hash('sha512') }}"
     update_password: on_create
     append: true
@@ -52,6 +50,7 @@
     - { dir: ".config/nvim/lua/erwin/core" }
     - { dir: ".config/nvim/lua/erwin/plugins" }
     - { dir: ".config/nvim/lua/erwin/plugins/lsp" }
+  when: nvim is true
 
 - name: users | erwin | copy dotfiles
   tags: dotfiles,users,erwin,tmux,users,vim,zsh
@@ -127,3 +126,4 @@
         src: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua",
         dest: ".config/nvim/lua/erwin/plugins/lsp/null-ls.lua",
       }
+  when: nvim is true

@@ -19,3 +19,4 @@ sftp_path: /usr/lib/openssh/sftp-server
 sudo_group: sudo
 vim_package: vim-nox
 nvim_package: neovim
+python_setuptools_package: python3-setuptools

@@ -20,5 +20,4 @@
   user:
     name: s1m0ne
     groups: users,root,{{ sudo_group }}
-    uid: 1000
     state: present

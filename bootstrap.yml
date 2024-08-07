@@ -1,20 +1,23 @@
 ---
 - hosts: all
   become: true
-  pre_tasks:
-    - name: Install Updates (CentOS)
-      tags: always
-      dnf:
-        update_only: yes
-        update_cache: yes
-      when: ansible_distribution == "CentOS"
+  # TODO: pre_tasks moeten verplaatst worden naar het einde van bootstrap, of helemaal verwijderen?
+  # Krijg een foutmelding bij proxmox post_install
 
-    - name: Install Updates (Ubuntu and Debian)
-      tags: always
-      apt:
-        upgrade: dist
-        update_cache: yes
-      when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
+  # pre_tasks:
+  #   - name: Install Updates (CentOS)
+  #     tags: always
+  #     dnf:
+  #       update_only: yes
+  #       update_cache: yes
+  #     when: ansible_distribution == "CentOS"
+  #
+  #   - name: Install Updates (Ubuntu and Debian)
+  #     tags: always
+  #     apt:
+  #       upgrade: dist
+  #       update_cache: yes
+  #     when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
 
 - hosts: all
   become: true
@@ -31,7 +34,7 @@
       user:
         name: s1m0ne
         groups: root
-        uid: 1000
+        #        uid: 1000 (deprecated)
 
     - name: Add SSH Key for s1m0ne
       tags: always

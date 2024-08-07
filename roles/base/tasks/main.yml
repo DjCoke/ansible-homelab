@@ -13,13 +13,13 @@
     - import_tasks: ansible_setup.yml
 
     # install software
-    - import_tasks: software/repositories.yml
+    - ansible.builtin.import_tasks: software/repositories.yml
     - import_tasks: software/packages_development.yml
     - import_tasks: software/packages_cleanup.yml
-    - import_tasks: software/packages_pip.yml
+    #  - import_tasks: software/packages_pip.yml
     - import_tasks: software/packages_utilities.yml
     - import_tasks: software/nvim.yml
-      when: nvim is defined
+      when: nvim is true
 
     # Perform remaining tasks:
     - import_tasks: system_setup/clock.yml
