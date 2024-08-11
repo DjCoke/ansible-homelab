@@ -6,9 +6,7 @@
     # Make sure users exist on the system
     - import_tasks: users/erwin.yml
     - import_tasks: users/root.yml
-    - import_tasks: users/s1m0ne.yml
-    - import_tasks: users/michelle.yml
-
+    
     # Set up the ansible environment
     - import_tasks: ansible_setup.yml
 
