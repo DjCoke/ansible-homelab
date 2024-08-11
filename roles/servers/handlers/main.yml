@@ -1,5 +1,6 @@
-# File: roles/samba/handlers/main.yml
 ---
+# Handler for server playbooks
+# Handlers for PiHole
 - name: Restart Unbound services
   ansible.builtin.service:
     name: unbound
@@ -13,3 +14,10 @@
 - name: reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
+
+# Handlers for docker/docker_install.yml and docker/portainer_deploy.yml
+# Restart Docker service
+- name: Restart Docker
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted

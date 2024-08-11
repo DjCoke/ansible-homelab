@@ -9,10 +9,10 @@
 - block:
     - import_tasks: pihole/main.yml
       when: pihole_server
-    - import_tasks: docker/main.yml
+    - import_tasks: docker/docker_install.yml
       when: docker_server
-    - import_tasks: docker/apps.yml
-      when: docker_server
+#    - import_tasks: docker/portainer_deploy.yml
+#      when: docker_server
     - import_tasks: syncthing/main.yml
       when: syncthing_server
 
