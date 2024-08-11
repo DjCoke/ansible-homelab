@@ -5,7 +5,7 @@ Port {{ ssh_port |default(22) }}
 Protocol 2
 
 # Authentication:
-AllowUsers {{ ssh_users | default("erwin s1m0ne") }}
+AllowUsers {{ ssh_users | default("erwin") }}
 ChallengeResponseAuthentication no
 HostbasedAuthentication no
 LoginGraceTime 120

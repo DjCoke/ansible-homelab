@@ -3,7 +3,6 @@
 
 # Install ohmyzsh for the defined users.
 ohmyzsh_users:
-#  - s1m0ne
   - erwin
 
 # Setup the ohmyzsh theme to used

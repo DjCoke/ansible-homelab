@@ -37,6 +37,7 @@
   template:
     src: templates/proxmox_sources.list.j2
     dest: /etc/apt/sources.list
+  when: proxmox_server
 
 - name: Apt-get update_cache (Proxmox)
   tags:
