@@ -3,7 +3,7 @@ branch: master
 
 ansible_cron_minute: "40"
 ssh_port: 22
-ssh_users: "erwin s1m0ne"
+ssh_users: "erwin"
 
 # platform-specific
 linode_instance: false
