@@ -6,6 +6,9 @@ docker_apt_repository: "deb [arch=amd64] https://download.docker.com/linux/ubunt
 docker_daemon_options:
   storage-driver: "overlay2"
 
+# portainer vars
+portainer_version: "latest"
+
 # pihole vars
 pihole_packages:
   - unbound

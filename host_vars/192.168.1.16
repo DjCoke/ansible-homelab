@@ -25,5 +25,3 @@ portainer: false
 
 # Specific software
 nvim: false
-
-debugging: false

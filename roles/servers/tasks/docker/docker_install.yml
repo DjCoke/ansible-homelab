@@ -1,0 +1,156 @@
+---
+# according to https://www.reddit.com/r/docker/comments/198a0nl/whats_the_latest_with_dockercompose/
+# latest version of docker-compose in Ubuntu 24.05 LTS is not correctly installed
+# have to do some commands: solution:
+# $ sudo apt remove docker-compose
+# $ wget https://github.com/docker/compose/releases/download/v2.24.1/docker-compose-linux-x86_64
+# $ chmod +x docker-compose-linux-x86_64
+# $ sudo mv docker-compose-linux-x86_64 /usr/bin/docker-compose
+# $ docker-compose --version
+# Docker Compose version v2.24.1
+# $ sudo docker-compose up
+# Things work
+
+# I got the error as described here: https://bugs.launchpad.net/ubuntu/+source/docker-compose/+bug/2056735
+# Then installed the recent python3-compose and pyhton3-docker, and got this error
+# as described here: https://github.com/docker/docker-py/issues/3194
+
+# To get it work, i had to 
+# $ sudo apt-get install python3-compose
+# $ sudo apt-get install python3-pip
+# $ sudo pip install docker==6.1.3 --break-system-packages
+
+# Manage docker-compose installation based on Ubuntu version
+
+# Moved the docker-compose part from portainer_deploy as it made more sens to put it in docker_install
+
+- name: Ensure apt is using HTTPS
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+
+- name: Install Docker CE
+  ansible.builtin.apt:
+    name: docker-ce
+    state: present
+    update_cache: true
+
+- name: Configure Docker daemon options
+  ansible.builtin.template:
+    src: "templates/docker_daemon.json.j2"
+    dest: "/etc/docker/daemon.json"
+    owner: 'root'
+    group: 'root'
+    mode: '0755'  # Optional file permissions
+  notify: Restart Docker
+
+- name: Ensure Docker service is enabled and running
+  ansible.builtin.systemd:
+    name: docker
+    enabled: true
+    state: started
+
+
+- name: Check if the system is Ubuntu 24.04
+  set_fact:
+    is_ubuntu_24_04: "{{ ansible_distribution == 'Ubuntu' and ansible_distribution_version == '24.04' }}"
+
+- name: Remove old docker-compose (only for Ubuntu 24.04)
+  apt:
+    name: docker-compose
+    state: absent
+  when: is_ubuntu_24_04
+
+- name: Check if docker-compose binary is already downloaded previously with fix for Ubuntu 24.04
+  stat:
+    path: /usr/bin/docker-compose
+  register: docker_compose_exists
+  when: is_ubuntu_24_04
+
+- name: Download docker-compose v2.24.1 (only for Ubuntu 24.04)
+  get_url:
+    url: https://github.com/docker/compose/releases/download/v2.24.1/docker-compose-linux-x86_64
+    dest: /tmp/docker-compose-linux-x86_64
+    mode: '0755'
+  when:
+  - is_ubuntu_24_04
+  - not docker_compose_exists.stat.exists
+
+- name: Make docker-compose executable (only for Ubuntu 24.04)
+  file:
+    path: /tmp/docker-compose-linux-x86_64
+    mode: '0755'
+    state: file
+  when:
+  - is_ubuntu_24_04
+  - not docker_compose_exists.stat.exists
+
+- name: Move docker-compose to /usr/bin/ (only for Ubuntu 24.04)
+  command: mv /tmp/docker-compose-linux-x86_64 /usr/bin/docker-compose
+  when:
+  - is_ubuntu_24_04
+  - not docker_compose_exists.stat.exists
+
+- name: Check docker-compose version (only for Ubuntu 24.04)
+  command: docker-compose --version
+  register: result
+  when: is_ubuntu_24_04
+
+- name: Display docker-compose version (only for Ubuntu 24.04)
+  debug:
+    msg: "{{ result.stdout }}"
+  when: is_ubuntu_24_04
+
+- name: Ensure docker-compose is installed (for non-Ubuntu 24.04 systems)
+  ansible.builtin.package:
+    name: docker-compose
+    state: present
+  when: not is_ubuntu_24_04
+
+- name: Install python3-compose (only for Ubuntu 24.04)
+  apt:
+    name: python3-compose
+    state: present
+    update_cache: yes
+  when: is_ubuntu_24_04
+
+- name: Install python3-pip (only for Ubuntu 24.04)
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+  when: is_ubuntu_24_04
+
+- name: Install Docker Python package with pip (only for Ubuntu 24.04)
+  pip:
+    name: docker==6.1.3
+    extra_args: --break-system-packages
+  when: is_ubuntu_24_04
+
+#we can now add user to group docker (before it did not exist)
+- name: Ensure the docker group exists
+  group:
+    name: docker
+    state: present
+
+- name: users | erwin | add to group docker
+  tags: erwin
+  user:
+    name: erwin
+    groups: docker
+    append: yes

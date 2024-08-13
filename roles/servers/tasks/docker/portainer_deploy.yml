@@ -1,10 +1,31 @@
 ---
-- name: Deploy Watchtower
-  tags: docker,watchtower
-  community.docker.docker_container:
-    name: watchtower
-    image: containrrr/watchtower
-    command: --schedule "0 0 4 * * *" --debug --cleanup
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart_policy: always
+# installing portainer on our docker_server
+
+- name: Ensure Docker service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Setup Portainer directory
+  ansible.builtin.file:
+    path: /home/erwin/docker-compose/portainer
+    state: directory
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+
+- name: Deploy Portainer using Docker Compose
+  ansible.builtin.template:
+    src: "templates/docker_compose_portainer.yaml.j2"
+    dest: "/home/erwin/docker-compose/portainer/docker-compose.yaml"
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+  notify:
+    - Start Portainer
+
+- name: Run Portainer docker-compose up
+  community.docker.docker_compose:
+    project_src: /home/erwin/docker-compose/portainer
+    state: present

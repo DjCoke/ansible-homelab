@@ -21,3 +21,9 @@
   ansible.builtin.systemd:
     name: docker
     state: restarted
+
+- name: Start Portainer
+  community.docker.docker_compose:
+    project_src: /home/erwin/docker-compose/portainer
+    state: present
+    restarted: true

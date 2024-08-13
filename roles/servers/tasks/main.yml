@@ -10,9 +10,14 @@
     - import_tasks: pihole/main.yml
       when: pihole_server
     - import_tasks: docker/docker_install.yml
+      tags:
+        - docker_install
+        - docker
       when: docker_server
-#    - import_tasks: docker/portainer_deploy.yml
-#      when: docker_server
+    - import_tasks: docker/portainer_deploy.yml
+      tags:
+        - portainer
+      when: docker_server
     - import_tasks: syncthing/main.yml
       when: syncthing_server
 
