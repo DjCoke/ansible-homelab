@@ -1,0 +1,42 @@
+networks:
+  dns_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: {{ pihole_subnet }}
+
+services:
+  pihole:
+    container_name: pihole
+    hostname: pihole
+    image: pihole/pihole:{{ pihole_version }} # remember to change this if you're using rpi
+    networks:
+      dns_net:
+        ipv4_address: {{ pihole_internal_ip }}
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'Europe/Amsetrdam' # Verander dit naar jouw tijdzone
+      WEBPASSWORD: '{{ pihole_password_clear }}' # Verander dit naar jouw gewenste wachtwoord
+      PIHOLE_DNS_: '{{ pihole_dns_resolver }}#5053'
+    volumes:
+      - '/home/erwin/docker/pihole/etc-pihole/:/etc/pihole/'
+      - '/home/erwin/docker/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    restart: unless-stopped
+
+  unbound:
+    container_name: unbound
+    image: mvance/unbound:{{ pihole_unbound_version }} # remember to change this if you're using rpi
+    networks:
+      dns_net:
+        ipv4_address: {{ pihole_dns_resolver }}
+    volumes:
+      - /home/erwin/docker-compose/pihole/unbound:/opt/unbound/etc/unbound
+    ports:
+      - "5053:53/tcp"
+      - "5053:53/udp"
+    healthcheck:
+      test: ["NONE"]
+    restart: unless-stopped

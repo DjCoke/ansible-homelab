@@ -10,6 +10,13 @@ docker_daemon_options:
 portainer_version: "latest"
 
 # pihole vars
+pihole_version: "latest"
+pihole_subnet: "172.23.0.0/16"
+pihole_internal_ip: "172.23.0.7"
+pihole_dns_resolver: "172.23.0.8"
+pihole_unbound_version: "latest"
+
+
 pihole_packages:
   - unbound
 

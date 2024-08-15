@@ -1,0 +1,79 @@
+---
+# installing PiHole on our docker_server  
+
+- name: Ensure Docker service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Setup PiHole directory
+  ansible.builtin.file:
+    path: /home/erwin/docker-compose/pihole
+    state: directory
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+
+- name: Setup Unbound directory
+  ansible.builtin.file:
+    path: /home/erwin/docker-compose/pihole/unbound
+    state: directory
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+
+- name: Deploy Unbound conf
+  ansible.builtin.template:
+    src: "templates/unbound.conf.j2"
+    dest: "/home/erwin/docker-compose/pihole/unbound/unbound.conf"
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+
+- name: Deploy Unbound conf
+  ansible.builtin.template:
+    src: "templates/unbound.conf.j2"
+    dest: "/home/erwin/docker-compose/pihole/unbound/unbound.conf"
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+
+- name: Deploy A records conf
+  ansible.builtin.template:
+    src: "templates/a-records.conf.j2"
+    dest: "/home/erwin/docker-compose/pihole/unbound/a-records.conf"
+    mode: '0755'
+    owner: erwin
+    group: erwin
+
+- name: Deploy Forward records conf
+  ansible.builtin.template:
+    src: "templates/forward-records.conf.j2"
+    dest: "/home/erwin/docker-compose/pihole/unbound/forward-records.conf"
+    mode: '0755'
+    owner: erwin
+    group: erwin
+
+- name: Deploy SRV records conf
+  ansible.builtin.template:
+    src: "templates/srv-records.conf.j2"
+    dest: "/home/erwin/docker-compose/pihole/unbound/srv-records.conf"
+    mode: '0755'
+    owner: erwin
+    group: erwin
+
+- name: Deploy PiHole using Docker Compose
+  ansible.builtin.template:
+    src: "templates/docker_compose_pihole.yaml.j2"
+    dest: "/home/erwin/docker-compose/pihole/docker-compose.yaml"
+    mode: '0755'  # Optional file permissions
+    owner: erwin  # Optional ownership
+    group: erwin  # Optional group ownership
+  notify:
+    - Start PiHole
+
+- name: Run PiHole docker-compose up
+  community.docker.docker_compose:
+    project_src: /home/erwin/docker-compose/pihole
+    state: present

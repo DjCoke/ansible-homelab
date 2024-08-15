@@ -7,18 +7,26 @@
   tags: servers
 
 - block:
-    - import_tasks: pihole/main.yml
-      when: pihole_server
     - import_tasks: docker/docker_install.yml
       tags:
         - docker_install
-        - docker
+        - docker_server
       when: docker_server
     - import_tasks: docker/portainer_deploy.yml
       tags:
-        - portainer
-      when: docker_server
+        - portainer_server
+      when: portainer_server
+    - import_tasks: pihole/systemd-resolved.yml
+      tags:
+        - pihole_server
+      when: pihole_server  
+    - import_tasks: pihole/pihole_deploy.yml
+      tags:
+        - pihole_server
+      when: pihole_server
     - import_tasks: syncthing/main.yml
+      tags:
+        - syncthing_server
       when: syncthing_server
 
   rescue:

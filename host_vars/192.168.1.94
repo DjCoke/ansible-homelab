@@ -16,13 +16,14 @@ raspberry_pi: false
 # server
 unattended_upgrades: true
 web_server: false
-proxmox_server: true
 syncthing_server: false
 pihole_server: false
 docker_server: false
-portainer: false
+portainer_server: false
 
 # proxmox_server
+proxmox_server: true
+# on first run, we need first to setup repositories
 skip_pre_tasks: true
 
 debugging: false

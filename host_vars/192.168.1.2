@@ -8,9 +8,9 @@ ssh_users: "erwin gravity-sync"
 # platform-specific
 linode_instance: false
 microcode_amd_install: false
-microcode_intel_install: false
-proxmox_instance: true
-proxmox_vm: false
+microcode_intel_install: true
+proxmox_instance: false
+proxmox_vm: true
 raspberry_pi: false
 
 # server
@@ -18,6 +18,10 @@ unattended_upgrades: true
 web_server: false
 proxmox_server: false
 syncthing_server: false
+# docker_server
+docker_server: true
+# portainer
+portainer_server: false
 
 # pihole
 pihole_server: true
@@ -30,10 +34,6 @@ pihole:
 pihole_gravity_sync_remote_host: "192.168.1.3"
 pihole_gravity_sync_remote_user: "gravity-sync"
 
-# docker_server
-docker_server: false
 
-# portainer
-portainer: false
 
 debugging: false
