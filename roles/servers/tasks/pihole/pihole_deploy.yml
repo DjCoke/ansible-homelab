@@ -14,6 +14,8 @@
     mode: '0755'  # Optional file permissions
     owner: erwin  # Optional ownership
     group: erwin  # Optional group ownership
+  # This task ensures that the /home/erwin/docker-compose/pihole directory exists.
+  # If it doesn't exist, it will be created with the specified permissions and ownership.
 
 - name: Setup Unbound directory
   ansible.builtin.file:
@@ -70,10 +72,10 @@
     mode: '0755'  # Optional file permissions
     owner: erwin  # Optional ownership
     group: erwin  # Optional group ownership
-  notify:
-    - Start PiHole
 
-- name: Run PiHole docker-compose up
-  community.docker.docker_compose:
-    project_src: /home/erwin/docker-compose/pihole
-    state: present
+- name: Run PiHole docker-compose up (not with community.docker.docker_compose) it has a weird bug
+  ansible.builtin.shell: |
+    docker compose -f /home/erwin/docker-compose/pihole/docker-compose.yaml up -d
+  args:
+    chdir: /home/erwin/docker-compose/pihole
+  # This task runs the docker-compose command in the specified directory.

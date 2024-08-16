@@ -1,10 +1,6 @@
 ---
 # Insired and based on
 # https://git.zotha.de/ansible-roles/pihole/-/blob/master/tasks/gravity_sync.yml
-#
-#
-#
-#
 - name: servers | pihole | Create gravity-sync user
   tags: pihole,gravity-sync
   user:

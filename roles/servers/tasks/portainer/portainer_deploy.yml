@@ -22,10 +22,10 @@
     mode: '0755'  # Optional file permissions
     owner: erwin  # Optional ownership
     group: erwin  # Optional group ownership
-  notify:
-    - Start Portainer
 
-- name: Run Portainer docker-compose up
+# Restart Portainer service
+- name: Start Portainer
   community.docker.docker_compose:
     project_src: /home/erwin/docker-compose/portainer
     state: present
+    restarted: true

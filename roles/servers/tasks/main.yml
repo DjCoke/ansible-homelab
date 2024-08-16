@@ -7,23 +7,28 @@
   tags: servers
 
 - block:
+# load tasks for setting up Docker and Docker Compose for Ubuntu 24.04 LTS
     - import_tasks: docker/docker_install.yml
       tags:
         - docker_install
         - docker_server
       when: docker_server
-    - import_tasks: docker/portainer_deploy.yml
+# load tasks for setting up Portainer
+    - import_tasks: portainer/portainer_deploy.yml
       tags:
         - portainer_server
       when: portainer_server
+# load tasks for shutting off DNS resolver from system-resolved as port 53 will be needed for PiHole
     - import_tasks: pihole/systemd-resolved.yml
       tags:
         - pihole_server
       when: pihole_server  
+# load tasks for setting up PiHole
     - import_tasks: pihole/pihole_deploy.yml
       tags:
         - pihole_server
       when: pihole_server
+# load tasks for setting up Syncthing
     - import_tasks: syncthing/main.yml
       tags:
         - syncthing_server

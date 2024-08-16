@@ -1,4 +1,5 @@
 ---
+# TODO: still needed?
 - name: reload systemd
   ansible.builtin.systemd:
     daemon_reload: true
@@ -9,18 +10,3 @@
   ansible.builtin.systemd:
     name: docker
     state: restarted
-
-- name: Start Portainer
-  community.docker.docker_compose:
-    project_src: /home/erwin/docker-compose/portainer
-    state: present
-    restarted: true
-
-# Handlers for docker/pihole_deploy.yml
-# Restart pihole service
-
-- name: Start PiHole
-  community.docker.docker_compose:
-    project_src: /home/erwin/docker-compose/pihole
-    state: present
-    restarted: true

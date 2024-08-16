@@ -1,9 +1,0 @@
-- name: system setup | pip packages | install bpytop
-  tags: bpytop,packages,pip,python
-  become: true
-  become_user: erwin
-  pip:
-    executable: /usr/bin/pip3
-    state: latest
-    name: bpytop
-  when: not proxmox_server

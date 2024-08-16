@@ -1,3 +1,4 @@
+# {{ansible_managed}}
 networks:
   dns_net:
     driver: bridge
@@ -19,11 +20,11 @@ services:
       - "80:80/tcp"
     environment:
       TZ: 'Europe/Amsetrdam' # Verander dit naar jouw tijdzone
-      WEBPASSWORD: '{{ pihole_password_clear }}' # Verander dit naar jouw gewenste wachtwoord
+      WEBPASSWORD: '{{ pihole_password_clear }}' # password should be clear, put it away in Ansible Vault secrets
       PIHOLE_DNS_: '{{ pihole_dns_resolver }}#5053'
     volumes:
-      - '/home/erwin/docker/pihole/etc-pihole/:/etc/pihole/'
-      - '/home/erwin/docker/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - '/home/erwin/docker-compose/pihole/etc-pihole/:/etc/pihole/'
+      - '/home/erwin/docker-compose/pihole/etc-dnsmasq.d/:/etc/dnsmasq.d/'
     restart: unless-stopped
 
   unbound:

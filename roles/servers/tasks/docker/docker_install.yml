@@ -50,6 +50,19 @@
     state: present
     update_cache: true
 
+#we can now add user to group docker (before it did not exist)
+- name: Ensure the docker group exists
+  group:
+    name: docker
+    state: present
+
+- name: users | erwin | add to group docker
+  tags: erwin
+  user:
+    name: erwin
+    groups: docker
+    append: yes
+
 - name: Configure Docker daemon options
   ansible.builtin.template:
     src: "templates/docker_daemon.json.j2"
@@ -64,7 +77,6 @@
     name: docker
     enabled: true
     state: started
-
 
 - name: Check if the system is Ubuntu 24.04
   set_fact:
@@ -141,16 +153,3 @@
     name: docker==6.1.3
     extra_args: --break-system-packages
   when: is_ubuntu_24_04
-
-#we can now add user to group docker (before it did not exist)
-- name: Ensure the docker group exists
-  group:
-    name: docker
-    state: present
-
-- name: users | erwin | add to group docker
-  tags: erwin
-  user:
-    name: erwin
-    groups: docker
-    append: yes

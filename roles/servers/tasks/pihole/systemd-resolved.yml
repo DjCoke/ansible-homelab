@@ -28,3 +28,53 @@
   systemd:
     name: systemd-resolved
     state: restarted
+
+# After this change, docker DNS resolve will break, to fix this:
+- name: Ensure jq is installed
+  ansible.builtin.package:
+    name: jq
+    state: present
+
+- name: Ensure /etc/docker directory exists
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: '0755'
+
+# modify deamon.json
+- name: Check if Docker daemon.json exists
+  ansible.builtin.stat:
+    path: /etc/docker/daemon.json
+  register: daemon_json_stat
+  # This task checks if the /etc/docker/daemon.json file exists and registers the result.
+
+- name: Read Docker daemon.json
+  ansible.builtin.slurp:
+    path: /etc/docker/daemon.json
+  when: daemon_json_stat.stat.exists
+  register: daemon_json_content
+  # This task reads the content of the daemon.json file if it exists and stores it as a base64 encoded string.
+
+- name: Decode and check if DNS settings are already present
+  ansible.builtin.set_fact:
+    dns_already_set: "{{ '8.8.8.8' in (daemon_json_content.content | b64decode | from_json).dns | default([]) }}"
+  when: daemon_json_stat.stat.exists
+  # This task decodes the content, converts it from JSON, and checks if the DNS settings already include "8.8.8.8".
+  # If the "dns" key does not exist, it defaults to an empty list.
+
+- name: Modify Docker daemon.json to add DNS settings
+  ansible.builtin.shell: |
+    jq '.dns |= . + ["8.8.8.8", "8.8.4.4"]' /etc/docker/daemon.json > /etc/docker/daemon.tmp
+    mv /etc/docker/daemon.tmp /etc/docker/daemon.json
+  args:
+    executable: /bin/bash
+  when: daemon_json_stat.stat.exists and not dns_already_set
+  # This task modifies the daemon.json file to add the DNS settings using jq if they are not already present.
+  # It creates a temporary file and then moves it to the final location.
+
+- name: Restart Docker to apply changes
+  ansible.builtin.systemd:
+    name: docker
+    state: restarted
+  when: daemon_json_stat.stat.exists and not dns_already_set
+  # This task restarts the Docker service to apply the changes if the DNS settings were added.
