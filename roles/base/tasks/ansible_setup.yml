@@ -1,24 +1,39 @@
-- name: ansible setup | ensure ansible is the latest version
+- name: Ansible Setup | Update apt-cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  register: result
+  until: result is succeeded
+  # This task updates the apt package cache, ensuring it is refreshed.
+  # The cache is considered valid for 3600 seconds (1 hour).
+  # The task will retry until the cache update succeeds.
+
+- name: Ansible Setup | Ensure ansible is the latest version
   tags: ansible,ansible-setup
   package:
     name: ansible
     state: latest
+  # This task ensures that the latest version of Ansible is installed on the host.
+  # It will upgrade Ansible if an older version is detected.
 
-- name: ansible setup | install required packages
+- name: Ansible Setup | Install required packages
   tags: ansible,ansible-setup,packages
   package:
     name:
       - "{{ dconf_package }}"
       - "{{ python_psutil_package }}"
+  # This task installs additional required packages for the playbook.
+  # The packages are specified by the variables `dconf_package` and `python_psutil_package`.
 
-# Note: For Arch, the requirement is met by a dependency of systemd, only necessary on Debian-based
-- name: ansible setup | install acl package
+- name: Ansible Setup | Install acl package
   tags: ansible,ansible-setup,packages
   package:
     name: acl
   when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+  # This task installs the 'acl' package, which is needed for managing access control lists.
+  # It is only installed on Debian-based distributions, as it's already included in Arch Linux.
 
-- name: ansible setup | create ansible log file
+- name: Ansible Setup | Create ansible log file
   tags: ansible,ansible-setup
   file:
     path: /var/log/ansible.log
@@ -27,8 +42,11 @@
     mode: 0664
     state: touch
   changed_when: False
+  # This task creates the Ansible log file at /var/log/ansible.log if it doesn't already exist.
+  # The file is owned by the 'erwin' user and has permissions set to 0664.
+  # The task does not report changes if the file already exists.
 
-- name: ansible setup | add logrotate config for ansible log file
+- name: Ansible Setup | Add logrotate config for ansible log file
   tags: ansible-setup
   copy:
     src: files/ansible_setup/logrotate
@@ -36,9 +54,14 @@
     owner: root
     group: root
     mode: 0644
+  # This task installs a logrotate configuration file for the Ansible log.
+  # The configuration file is copied to /etc/logrotate.d/ansible and sets up automatic log rotation.
+  # The file is owned by root with permissions set to 0644.
 
-- name: ansible setup | remove default ansible directory (/etc/ansible) from host
+- name: Ansible Setup | Remove default ansible directory (/etc/ansible) from host
   tags: ansible,ansible-setup
   file:
     path: /etc/ansible
     state: absent
+  # This task removes the default Ansible directory (/etc/ansible) if it exists.
+  # This is useful if you want to avoid using the default configuration directory.

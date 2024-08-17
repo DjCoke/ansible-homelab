@@ -1,52 +1,47 @@
 ---
-# tasks to complete before running roles
 - hosts: all
-  tags: always
   become: true
-  pre_tasks:
-    - name: Install Updates (CentOS)
-      tags: pre_tasks, always
-      dnf:
-        update_cache: true
-      changed_when: false
-      when: ansible_distribution == "CentOS"
 
-    - name: Install Updates (Ubuntu / Debian)
-      tags:
-        - pre_tasks
-        - always
-      apt:
-        update_cache: true
-        cache_valid_time: 3600
-      changed_when: false
-      when: ansible_pkg_mgr == "apt" and (skip_pre_tasks is not defined or not skip_pre_tasks)
-
-# run roles
+###
+### Base (for every machine)
+###
 - hosts: all
   tags: base
   become: true
   roles:
     - base
 
+###
+### Only workstations
+###
 - hosts: workstations
   tags: workstations
   become: true
   roles:
     - workstations
 
+###
+### Only proxmox
+###
 - hosts: proxmox
   tags: proxmox
   become: true
   roles:
     - proxmox
 
+
+###
+### Only proxmox
+###
 - hosts: servers
   tags: servers
   become: true
   roles:
     - servers
 
-# end of run cleanup and reporting
+###
+### end of run cleanup and reporting
+###
 - hosts: all
   become: true
   tasks:
@@ -63,18 +58,3 @@
         autoremove: true
         purge: true
       when: ansible_pkg_mgr == "apt"
-
-    - name: Send completion alert
-      include_tasks: playbooks/send_completion_alert.yml
-      tags: always
-      when:
-        - task_failed is not defined
-        - debugging is not defined
-
-    - name: Send failure alert
-      include_tasks: playbooks/send_failure_alert.yml
-      tags: always
-      when:
-        - task_failed is defined
-        - task_failed == true
-        - debugging is not defined
