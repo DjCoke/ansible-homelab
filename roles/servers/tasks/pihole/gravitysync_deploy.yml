@@ -1,0 +1,110 @@
+# Inspired and based on
+# https://git.zotha.de/ansible-roles/pihole/-/blob/master/tasks/gravity_sync.yml
+- name: Servers | PiHole | Create gravity-sync user and add to sudo group
+  user:
+    name: gravity-sync
+    shell: /bin/bash
+    home: /opt/gravity-sync
+    system: true
+    groups: "{{ sudo_group }}"
+    append: true
+  # This task creates the gravity-sync user, sets the home directory, shell, and adds the user to the sudo group.
+
+- name: Servers | PiHole | Create gravity-sync .ssh directory
+  file:
+    path: /opt/gravity-sync/.ssh
+    state: directory
+    owner: gravity-sync
+  # This task ensures that the .ssh directory exists in the /opt/gravity-sync home directory for the gravity-sync user.
+  # The directory is created if it does not already exist, and ownership is set to the gravity-sync user.
+
+- name: Servers | PiHole | Create gravity-etc directory
+  file:
+    path: /etc/gravity-sync
+    state: directory
+    owner: root
+  # This task ensures that the /etc/gravity-sync directory exists.
+  # The directory is created if it does not already exist, and ownership is set to root.
+  # This directory might be used for storing configuration files or settings related to gravity-sync.
+
+- name: Servers | PiHole | Copy ssh private key for gravity-sync
+  copy:
+    content: "{{ pihole_gravity_sync_ssh_private_key }}"
+    dest: /opt/gravity-sync/.ssh/id_rsa
+    mode: "0600"
+    owner: gravity-sync
+  # This task copies the SSH private key for the gravity-sync user to the /opt/gravity-sync/.ssh/id_rsa file.
+  # The private key content is provided by the pihole_gravity_sync_ssh_private_key variable.
+  # The file is created with secure permissions (0600) and is owned by the gravity-sync user.
+
+- name: Servers | PiHole | Copy ssh public key for gravity-sync
+  authorized_key:
+    user: gravity-sync
+    key: "{{ item }}"
+  with_file:
+    - pihole/gravity-sync/id_rsa.pub
+  # This task adds the SSH public key to the authorized_keys file for the gravity-sync user.
+  # The key is read from the specified file (id_rsa.pub) and allows SSH access for gravity-sync using the corresponding private key.
+
+- name: Servers | PiHole | Add gravity-sync sudoers file
+  copy:
+    src: pihole/gravity-sync/sudoers_gravity-sync
+    dest: /etc/sudoers.d/gravity-sync
+    owner: root
+    group: root
+    mode: 0440
+  # This task copies the custom sudoers file for the gravity-sync user to the /etc/sudoers.d/ directory.
+  # The sudoers file grants specific sudo privileges to the gravity-sync user.
+  # The file is owned by root, with permissions set to 0440 to ensure it is read-only for security purposes.
+
+- name: Servers | PiHole | Clone the gravity-sync repo
+  ansible.builtin.git:
+    repo: https://github.com/vmstan/gravity-sync.git
+    depth: 1
+    dest: "/opt/gravity-sync/.gs"
+    version: master
+  # This task clones the gravity-sync GitHub repository into the /opt/gravity-sync/.gs directory.
+  # The depth: 1 option ensures that only the latest commit is cloned, reducing the size and time required.
+  # The repo is checked out to the master branch, which typically contains the latest stable version of the code.
+
+- name: Servers | PiHole | Copy gravity-sync
+  ansible.builtin.copy:
+    src: /opt/gravity-sync/.gs/gravity-sync
+    dest: /usr/local/bin/gravity-sync
+    remote_src: yes
+    owner: root
+    group: root
+    mode: '0755'
+  # This task copies the gravity-sync script from the cloned repository to the /usr/local/bin directory.
+  # The script is copied with execution permissions (0755), allowing it to be run as a command.
+  # Ownership is set to root, as /usr/local/bin is typically managed by the root user.
+  # The remote_src: yes option indicates that the source file is already on the target machine.
+
+- name: Servers | PiHole | Configure gravity-sync
+  template:
+    src: gravity-sync.conf.j2
+    dest: /etc/gravity-sync/gravity-sync.conf
+  # This task creates the gravity-sync configuration file using a Jinja2 template.
+  # The template (gravity-sync.conf.j2) is processed and the resulting configuration file is placed in /etc/gravity-sync.
+  # This allows for dynamic configuration of gravity-sync based on the template variables.
+
+- name: Servers | Pi-hole | Fail if pihole_gravity_mode has an invalid value
+  ansible.builtin.fail:
+    msg: "Invalid pihole_gravity_mode value: {{ pihole_gravity_mode }}. It must be either 'pull', 'push', 'absent', or 'false'."
+  when: pihole_gravity_mode is defined and pihole_gravity_mode not in ['pull', 'push', 'absent', false]
+  # This task fails the playbook execution if pihole_gravity_mode is set to an invalid value.
+  # The allowed values for pihole_gravity_mode are 'pull', 'push', 'absent', or 'false'.
+  # If the value is anything else, or the variable is not defined, the task will not fail.
+
+
+- name: Servers | Pi-hole | Manage gravity-sync cron job based on gravity mode
+  ansible.builtin.cron:
+    name: "sync pihole via gravity-sync"
+    minute: "*/5"
+    job: "/usr/local/bin/gravity-sync {{ pihole_gravity_mode }}"
+    user: gravity-sync
+    state: "{{ 'present' if pihole_gravity_mode in ['push', 'pull'] else 'absent' }}"
+  when: pihole_gravity_mode is defined
+  # This task manages the gravity-sync cron job for the user based on the pihole_gravity_mode variable.
+  # The cron job will execute either 'push' or 'pull' based on the value of pihole_gravity_mode.
+  # If pihole_gravity_mode is 'absent', 'false', or undefined, the cron job will be removed.

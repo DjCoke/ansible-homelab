@@ -22,12 +22,18 @@
     - import_tasks: pihole/systemd-resolved.yml
       tags:
         - pihole_server
-      when: pihole_server  
+      when: pihole_server 
 # load tasks for setting up PiHole
     - import_tasks: pihole/pihole_deploy.yml
       tags:
         - pihole_server
       when: pihole_server
+# load tasks for setting up Gravity Sync for PiHole
+    - import_tasks: pihole/gravitysync_deploy.yml
+      tags:
+        - pihole_server
+        - pihole_gravity
+      when: pihole_gravity
 # load tasks for setting up Syncthing
     - import_tasks: syncthing/main.yml
       tags:
