@@ -14,7 +14,7 @@ proxmox_vm: false
 raspberry_pi: false
 
 # server
-unattended_upgrades: true
+unattended_upgrades: false
 web_server: false
 proxmox_server: true
 syncthing_server: false

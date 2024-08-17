@@ -8,6 +8,14 @@
   # The cache is considered valid for 3600 seconds (1 hour).
   # The task will retry until the cache update succeeds.
 
+- name: Ansible Setup | Upgrade all packages
+  ansible.builtin.apt:
+    upgrade: yes
+    state: latest
+  when: unattended_upgrades
+  # This task upgrades all installed packages on the system to their latest versions.
+  # It only runs if the variable 'keep_packages_updated' is set to true.
+
 - name: Ansible Setup | Ensure ansible is the latest version
   tags: ansible,ansible-setup
   package:
@@ -24,6 +32,16 @@
       - "{{ python_psutil_package }}"
   # This task installs additional required packages for the playbook.
   # The packages are specified by the variables `dconf_package` and `python_psutil_package`.
+
+- name: Ansible Setup | Install extra packages
+  ansible.builtin.apt:
+    name: "{{ extra_packages }}"
+    state: present
+  register: result
+  until: result is succeeded
+  # This task installs the packages listed in the 'extra_packages' variable.
+  # The packages will be installed if they are not already present.
+  # The task retries until the installation succeeds and the result is registered.
 
 - name: Ansible Setup | Install acl package
   tags: ansible,ansible-setup,packages
