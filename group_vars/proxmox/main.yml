@@ -1,0 +1,7 @@
+# platform-specific
+proxmox_instance: false
+proxmox_vm: false
+
+# Proxmox-specific packages
+proxmox_extra_packages:
+  - pve-headers

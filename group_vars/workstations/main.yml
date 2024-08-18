@@ -1,0 +1,6 @@
+# Server-specific settings
+unattended_upgrades: true
+# Enables automatic security updates for the server to ensure it stays up to date with the latest patches.
+
+# Specific software settings for workstations
+nvim: true

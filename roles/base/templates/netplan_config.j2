@@ -1,0 +1,12 @@
+# templates/netplan_config.j2
+# Managed by Ansible
+network:
+  version: 2
+  ethernets:
+    all-ethernet-interfaces:
+      dhcp4: yes
+      nameservers:
+        addresses:
+          {% for server in dns_servers %}
+          - {{ server }}
+          {% endfor %}

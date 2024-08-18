@@ -19,7 +19,6 @@
   when: not proxmox_vm and not proxmox_instance
 
 - name: system setup | clock | set time zone
-  tags: ntp,timezone,system setup
-  timezone:
-    name: "Europe/Amsterdam"
-  when: not proxmox_vm
+  community.general.timezone:
+    name: "{{ timezone }}"
+  when: not proxmox_instance

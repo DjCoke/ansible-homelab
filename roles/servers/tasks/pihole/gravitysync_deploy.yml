@@ -101,10 +101,10 @@
   ansible.builtin.cron:
     name: "sync pihole via gravity-sync"
     minute: "*/5"
-    job: "/usr/local/bin/gravity-sync {{ pihole_gravity_mode }}"
+    job: "/usr/local/bin/gravity-sync pull > /opt/gravity-sync/gravity-sync.cron"
     user: gravity-sync
-    state: "{{ 'present' if pihole_gravity_mode in ['push', 'pull'] else 'absent' }}"
-  when: pihole_gravity_mode is defined
+    state: "{{ 'present' if pihole_gravity_mode == 'pull' else 'absent' }}"
+  when: pihole_gravity_mode is defined or pihole_gravity_mode in ['push', 'absent', 'false']
   # This task manages the gravity-sync cron job for the user based on the pihole_gravity_mode variable.
-  # The cron job will execute either 'push' or 'pull' based on the value of pihole_gravity_mode.
-  # If pihole_gravity_mode is 'absent', 'false', or undefined, the cron job will be removed.
+  # The cron job will be created if pihole_gravity_mode is set to 'pull'.
+  # The cron job will be removed if pihole_gravity_mode is set to 'push', 'absent', 'false', or if the variable is not defined.

@@ -17,3 +17,10 @@
   become: yes
   become_user: "{{ item }}"
   with_items: "{{ ohmyzsh_users }}"
+
+# handler for Netplan
+- name: Apply Netplan
+  ansible.builtin.command:
+    cmd: netplan apply
+  become: yes
+  tags: dns

@@ -1,29 +1,13 @@
----
-branch: master
+# Host specific
+# These settings are unique to this particular host.
 
-ansible_cron_minute: "40"
-ssh_port: 22
-ssh_users: "erwin"
-
-# platform-specific
-linode_instance: false
-microcode_amd_install: false
-microcode_intel_install: true
-proxmox_instance: false
-proxmox_vm: false
-raspberry_pi: false
-
-# server
+# Server settings for this host
 unattended_upgrades: false
-web_server: false
-syncthing_server: false
-pihole_server: false
-docker_server: false
-portainer_server: false
+# Disables automatic security updates for this host.
+# This might be set to false if you prefer to manage updates manually or if the server requires strict update control.
 
-# proxmox_server
 proxmox_server: true
-# on first run, we need first to setup repositories
-skip_pre_tasks: true
+# Enables the Proxmox server role on this host, indicating that this server is part of a Proxmox virtualization environment.
+# This setting will trigger tasks related to managing Proxmox on this host.
 
-debugging: false
+hostname: pve1.local.glind.io

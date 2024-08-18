@@ -9,6 +9,8 @@
     
     # Set up the ansible environment
     - import_tasks: ansible_setup.yml
+      tags:
+        - ansible_setup
 
     # install software
     - ansible.builtin.import_tasks: software/repositories.yml
@@ -25,6 +27,8 @@
 
     # Perform remaining tasks:
     - import_tasks: system_setup/clock.yml
+      tags:
+        - clock
     #  - import_tasks: system_setup/cron.yml
     - import_tasks: system_setup/locale.yml
     - import_tasks: system_setup/logging.yml

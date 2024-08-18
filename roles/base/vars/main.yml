@@ -32,3 +32,13 @@ proxmox_ve__apt_repo_todel:
   - pve-install-repo.list
   - proxmox.list
   - ceph.list
+
+extra_packages:
+  - "{{ dconf_package }}"
+  - "{{ python_psutil_package }}"
+  - smartmontools
+  - htop
+  - zfsutils-linux
+  - bonnie++
+  - unzip
+  - lm-sensors
