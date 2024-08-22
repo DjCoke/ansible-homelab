@@ -11,7 +11,7 @@ HostbasedAuthentication no
 LoginGraceTime 120
 PasswordAuthentication {{ passwd_auth | default("no") }}
 PermitEmptyPasswords no
-PermitRootLogin no
+PermitRootLogin {{ permitrootlogin | default("no") }}
 PubkeyAuthentication yes
 StrictModes yes
 UsePAM yes

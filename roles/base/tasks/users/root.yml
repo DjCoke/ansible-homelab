@@ -1,10 +1,10 @@
-- name: users | root | ensure account is locked
+- name: Users | root | Ensure account is locked
   user:
     name: root
     password_lock: true
   when: not proxmox_server
 
-- name: users | root | ensure account is not locked in proxmox (Web GUI)
+- name: Users | root | Ensure account is not locked in proxmox (Web GUI)
   user:
     name: root
     password_lock: false

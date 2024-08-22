@@ -5,3 +5,8 @@ proxmox_vm: false
 # Proxmox-specific packages
 proxmox_extra_packages:
   - pve-headers
+
+#SSHD settings for proxmox
+# We have to open root login for cluster to be able to work
+permitrootlogin: "yes"
+ssh_users: "root erwin"

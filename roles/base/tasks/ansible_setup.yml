@@ -23,6 +23,17 @@
   # This task ensures that the latest version of Ansible is installed on the host.
   # It will upgrade Ansible if an older version is detected.
 
+- name: Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)
+  package:
+    name: sudo
+    state: present
+  when: ansible_distribution == "Debian"
+  tags: always
+  # This task ensures that the 'sudo' package is installed on Debian-based systems, such as Proxmox.
+  # 'become: true' is used to escalate privileges to root, necessary for installing packages.
+  # The task only runs if the distribution is identified as Debian.
+  # 'tags: always' ensures that this task is executed every time the playbook runs, regardless of other tags.
+
 - name: Debug extra packages
   debug:
     msg: "Extra packages to be installed: {{ extra_packages }}"
@@ -75,7 +86,9 @@
 - name: "Ansible Setup | Set hostname to {{ hostname }}"
   ansible.builtin.hostname:
     name: "{{ hostname }}"
+  when: hostname is defined
   # This task sets the hostname of the target machine to the value specified by the 'hostname' variable.
+  # The task will only run if the 'hostname' variable is defined.
   # The 'ansible.builtin.hostname' module is used to change the system's hostname.
 
 - name: Ansible Setup | Configure DNS servers in Netplan
@@ -88,12 +101,19 @@
   notify: Apply Netplan
   when: ansible_distribution == "Ubuntu"
   tags: dns
+  # This task configures the DNS servers using a Netplan template for Ubuntu systems.
+  # The 'ansible.builtin.template' module copies the template from the source to the destination.
+  # The task only runs on Ubuntu systems, as indicated by the 'when' condition.
+  # The 'Apply Netplan' handler is notified to apply the new network configuration.
 
 - name: Ansible Setup | Backup existing resolv.conf
   ansible.builtin.command:
-      cmd: cp /etc/resolv.conf /etc/resolv.conf.backup
+    cmd: cp /etc/resolv.conf /etc/resolv.conf.backup
   when: ansible_distribution != "Ubuntu"
   tags: dns
+  # This task creates a backup of the existing /etc/resolv.conf file on non-Ubuntu systems.
+  # The 'ansible.builtin.command' module runs the 'cp' command to copy the file.
+  # The task only runs on non-Ubuntu systems, as indicated by the 'when' condition.
 
 - name: Ansible Setup | Configure DNS servers in /etc/resolv.conf
   ansible.builtin.template:
@@ -104,3 +124,16 @@
     mode: 0644
   when: ansible_distribution != "Ubuntu"
   tags: dns
+  # This task configures the DNS servers by copying a template to /etc/resolv.conf on non-Ubuntu systems.
+  # The 'ansible.builtin.template' module is used to manage the content of /etc/resolv.conf.
+  # The task only runs on non-Ubuntu systems, as indicated by the 'when' condition.
+
+- name: Ansible Setup | Install qemu-guest-agent if running in Proxmox VM
+  ansible.builtin.package:
+    name: qemu-guest-agent
+    state: present
+  when: proxmox_vm | bool
+  notify: Ansible Setup | Reboot the node
+  tags: proxmox_vm
+  # This task installs the 'qemu-guest-agent' package and triggers a reboot if the installation was successful.
+  # The reboot is handled by the 'Ansible Setup | Reboot the node' handler.

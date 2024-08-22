@@ -11,6 +11,7 @@
     - import_tasks: ansible_setup.yml
       tags:
         - ansible_setup
+        - bootstrap
 
     # install software
     - ansible.builtin.import_tasks: software/repositories.yml

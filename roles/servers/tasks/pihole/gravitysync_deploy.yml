@@ -6,7 +6,9 @@
     shell: /bin/bash
     home: /opt/gravity-sync
     system: true
-    groups: "{{ sudo_group }}"
+    groups:
+      - "{{ sudo_group }}"
+      - erwin
     append: true
   # This task creates the gravity-sync user, sets the home directory, shell, and adds the user to the sudo group.
 

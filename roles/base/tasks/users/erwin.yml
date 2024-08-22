@@ -1,11 +1,11 @@
-- name: users | erwin | create group
-  tags: groups,erwin,users
+- name: Users | Erwin | Create group
+  tags: erwin,bootstrap
   group:
     name: erwin
     state: present
 
-- name: users | erwin | create user
-  tags: erwin,sudo,users,samba
+- name: Users | Erwin | Create user
+  tags: erwin,bootstrap
   user:
     name: erwin
     group: erwin
@@ -16,8 +16,8 @@
     update_password: on_create
     append: true
 
-- name: users | erwin | erwin | add sudoers file
-  tags: erwin,settings,simone,sudo,system,users
+- name: Users | Erwin | Add sudoers file
+  tags: erwin,bootstrap
   copy:
     src: users/sudoers_erwin
     dest: /etc/sudoers.d/erwin
@@ -25,8 +25,8 @@
     group: root
     mode: 0440
 
-- name: users | erwin | add public key
-  tags: dotfiles,erwin,ssh,ssh-keys,users
+- name: Users | Erwin | Add public key
+  tags: erwin,bootstrap
   authorized_key:
     user: erwin
     key: "{{ item }}"
