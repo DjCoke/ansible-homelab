@@ -12,7 +12,8 @@ services:
       - SUDO_PASSWORD={{ code_server_password }}
      # - PROXY_DOMAIN=code-server.local.glind.io
       - DEFAULT_WORKSPACE=/config/workspace
-      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:code-server-zsh
+      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:code-server-zsh|linuxserver/mods:universal-package-install
+      - INSTALL_PACKAGES=ansible|ansible-lint
     volumes:
       - /home/erwin/docker-compose/code-server/config:/config
     # networks:
