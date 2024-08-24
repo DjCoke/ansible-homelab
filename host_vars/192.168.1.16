@@ -8,4 +8,7 @@ docker_server: true
 portainer_server: true
 # Enables the Portainer server role on this host, indicating that Portainer, a Docker management tool, should be installed and managed.
 
+code_server: true
+# Enables the Code-Server role on this host, indicating that Code-Server, a web-based IDE, should be installed and managed.
+
 hostname: docker.local.glind.io

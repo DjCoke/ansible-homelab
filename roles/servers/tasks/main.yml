@@ -39,6 +39,11 @@
       tags:
         - syncthing_server
       when: syncthing_server
+# load tasks for setting up Code-Server
+    - import_tasks: code_server/main.yml
+      tags:
+        - code_server
+      when: code_server
 
   rescue:
     - set_fact: task_failed=true

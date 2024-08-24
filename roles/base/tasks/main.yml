@@ -15,11 +15,14 @@
 
     # install software
     - ansible.builtin.import_tasks: software/repositories.yml
+    
     # install software/proxmox_repositories.yml
     - ansible.builtin.import_tasks: software/proxmox_repositories.yml
       tags:
         - proxmox_server
+        - bootstrap
       when: proxmox_server
+
     - import_tasks: software/packages_development.yml
     - import_tasks: software/packages_cleanup.yml
     - import_tasks: software/packages_utilities.yml

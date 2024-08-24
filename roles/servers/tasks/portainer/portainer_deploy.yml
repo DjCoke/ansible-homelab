@@ -1,31 +1,43 @@
 ---
-# installing portainer on our docker_server
-
-- name: Ensure Docker service is running
+- name: Portainer Server | Deployment | Ensure Docker service is running
   ansible.builtin.service:
     name: docker
     state: started
     enabled: true
+  tags: portainer_server
+  # This task ensures that the Docker service is running and enabled to start at boot.
+  # The 'ansible.builtin.service' module is used to manage the state of the Docker service.
+  # The task is tagged with 'portainer' to identify it as part of the Portainer deployment process.
 
-- name: Setup Portainer directory
+- name: Portainer Server | Deployment | Setup Portainer directory
   ansible.builtin.file:
     path: /home/erwin/docker-compose/portainer
     state: directory
-    mode: '0755'  # Optional file permissions
-    owner: erwin  # Optional ownership
-    group: erwin  # Optional group ownership
+    mode: '0755'
+    owner: erwin
+    group: erwin
+  tags: portainer_server
+  # This task creates the directory structure for Portainer under /home/erwin/docker-compose/portainer.
+  # The directory is created with the specified permissions and ownership.
+  # The 'ansible.builtin.file' module is used to manage the directory's state.
+  # The task is tagged with 'portainer' to identify it as part of the Portainer deployment process.
 
-- name: Deploy Portainer using Docker Compose
+- name: Portainer Server | Deployment | Deploy Compose file for Portainer
   ansible.builtin.template:
     src: "templates/docker_compose_portainer.yaml.j2"
     dest: "/home/erwin/docker-compose/portainer/docker-compose.yaml"
-    mode: '0755'  # Optional file permissions
-    owner: erwin  # Optional ownership
-    group: erwin  # Optional group ownership
+    mode: '0755'
+    owner: erwin
+    group: erwin
+  tags: portainer_server
+  # This task deploys Portainer by placing a Docker Compose file in the appropriate directory.
+  # The 'ansible.builtin.template' module is used to manage the content of the Docker Compose file.
+  # The file is created with the specified permissions and ownership.
+  # The task is tagged with 'portainer' to identify it as part of the Portainer deployment process.
 
-# Restart Portainer service
-- name: Start Portainer
+- name: Portainer Server | Deployment | Ensure Portainer is running
   community.docker.docker_compose:
     project_src: /home/erwin/docker-compose/portainer
     state: present
-    restarted: true
+  tags: portainer_server
+  # This task ensures that Portainer is running. It triggers the handler to restart the service if there are changes.

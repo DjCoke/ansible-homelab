@@ -1,0 +1,60 @@
+---
+- name: Code-Server | Deployment | Ensure Docker service is running
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  tags: code_server
+  # This task ensures that the Docker service is running and set to start automatically on boot.
+  # The 'ansible.builtin.service' module is used to manage the Docker service's state.
+  # The task is tagged with 'code_server' to identify it as part of the Code-Server deployment process.
+
+- name: Code-Server | Deployment | Setup Code-Server directory
+  ansible.builtin.file:
+    path: /home/erwin/docker-compose/code-server/config
+    state: directory
+    mode: '0755'
+    owner: erwin
+    group: erwin
+  tags: code_server
+  # This task creates the necessary directory structure for Code-Server under /home/erwin/docker-compose/code-server/config.
+  # The directory is created with the specified permissions and ownership to ensure proper access control.
+  # The 'ansible.builtin.file' module is used to manage the state of the directory.
+  # The task is tagged with 'code_server' to indicate that it is part of the Code-Server deployment process.
+
+- name: Code-Server | Deployment | Setup Code-Server Workspace directory
+  ansible.builtin.file:
+    path: /home/erwin/projects
+    state: directory
+    mode: '0755'
+    owner: erwin
+    group: erwin
+  tags: code_server
+  # This task creates the necessary directory structure for Code-Server under /home/erwin/projects.
+  # The directory is created with the specified permissions and ownership to ensure proper access control.
+  # The 'ansible.builtin.file' module is used to manage the state of the directory.
+  # The task is tagged with 'code_server' to indicate that it is part of the Code-Server deployment process.
+
+
+- name: Code-Server | Deployment | Deploy Compose file for Code-Server
+  ansible.builtin.template:
+    src: "templates/docker_compose_code-server.yaml.j2"
+    dest: "/home/erwin/docker-compose/code-server/docker-compose.yaml"
+    mode: '0755'
+    owner: erwin
+    group: erwin
+  tags: code_server
+  # This task deploys the Code-Server by placing a Docker Compose file in the appropriate directory.
+  # The 'ansible.builtin.template' module is used to manage the content of the Docker Compose file.
+  # The file is created with the specified permissions and ownership to ensure it is accessible and secure.
+  # The task is tagged with 'code_server' to identify it as part of the Code-Server deployment process.
+
+- name: Code-Server | Deployment | Ensure Code-Server is running
+  community.docker.docker_compose_v2:
+    project_src: /home/erwin/docker-compose/code-server
+    state: present
+  tags: code_server
+  # This task ensures that the Code-Server is running as specified in the Docker Compose configuration.
+  # The 'community.docker.docker_compose' module manages the state of the Docker Compose project.
+  # If the configuration has changed, the container will be updated and restarted as necessary.
+  # The task is tagged with 'code_server' to indicate that it is part of the Code-Server deployment process.

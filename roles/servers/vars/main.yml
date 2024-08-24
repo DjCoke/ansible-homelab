@@ -22,3 +22,8 @@ syncthing_packages:
   - curl
   - apt-transport-https
   - gnupg
+
+# 
+# Code Server variables
+#
+code_server_version: "latest"
