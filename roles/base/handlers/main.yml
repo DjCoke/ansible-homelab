@@ -1,29 +1,32 @@
 ---
-- name: apt_update
-  apt: update_cache=yes
+- name: Update Repo's
+  ansible.builtin.apt:
+    update_cache: true
 
-- name: restart_sshd
-  service:
+- name: Restart_sshd
+  ansible.builtin.service:
     name: "{{ openssh_service }}"
     state: restarted
 
 # handlers file for ohmyzsh
-- name: Configure .zshrc
+- ansible.builtin.name: Configure .zshrc
   copy:
     src: ~/.oh-my-zsh/templates/zshrc.zsh-template
     dest: ~/.zshrc
     mode: '0644'
-    remote_src: yes
-  become: yes
+    remote_src: true
+  become: true
   become_user: "{{ item }}"
   with_items: "{{ ohmyzsh_users }}"
 
-# handler for Netplan
 - name: Apply Netplan
   ansible.builtin.command:
     cmd: netplan apply
-  become: yes
+  become: true
+  changed_when: false
   tags: dns
+  # This handler applies Netplan configuration.
+  # The 'changed_when: false' ensures that the task is not marked as "changed" if nothing needed to be applied.
 
 - name: Ansible Setup | Reboot the node
   ansible.builtin.reboot:
