@@ -27,3 +27,8 @@ RKE2-server3 ansible_host=192.168.1.203
 RKE2-agent1 ansible_host=192.168.1.204
 RKE2-agent2 ansible_host=192.168.1.205
 RKE2-agent3 ansible_host=192.168.1.206
+
+[longhorn_nodes]
+RKE2-longhorn1 ansible_host=192.168.1.208
+RKE2-longhorn2 ansible_host=192.168.1.209
+RKE2-longhorn3 ansible_host=192.168.1.210
