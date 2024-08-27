@@ -3,14 +3,14 @@
   ansible.builtin.apt:
     update_cache: true
 
-- name: Restart_sshd
+- name: Base Setup | Restart sshd
   ansible.builtin.service:
     name: "{{ openssh_service }}"
     state: restarted
 
 # handlers file for ohmyzsh
-- ansible.builtin.name: Configure .zshrc
-  copy:
+- name: Configure .zshrc
+  ansible.builtin.copy:
     src: ~/.oh-my-zsh/templates/zshrc.zsh-template
     dest: ~/.zshrc
     mode: '0644'

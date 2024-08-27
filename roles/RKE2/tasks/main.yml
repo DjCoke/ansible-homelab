@@ -1,0 +1,75 @@
+# - name: RKE2 | Include OS-specific variables
+#   ansible.builtin.include_vars:
+#     file: "{{ item }}"
+#   with_first_found:
+#     - "{{ ansible_distribution }}.yml"
+#     - "{{ ansible_os_family }}.yml"
+#   tags: RKE2
+
+- name: RKE2 | Load tasks for setup RKE2
+  block:
+    - name: RKE2 | Prepare all nodes
+      ansible.builtin.import_tasks: all/prepare_nodes.yml
+      tags:
+        - RKE2
+        - RKE2_prepare_nodes
+    - name: RKE2 | Download RKE2 # creates directories for download and then downloads RKE2 and changes permissions
+      ansible.builtin.import_tasks: all/download_rke2.yml
+      tags:
+        - RKE2
+        - RKE2_prepare_nodes
+    - name: RKE2 | Deploy Kube VIP # # Creates RKE2 bootstrap manifests folder and copies kube-vip template over (configured with variables)
+      ansible.builtin.import_tasks: server_nodes/deploy_kube.yml
+      when: "'server_nodes' in group_names"
+      tags:
+        - RKE2
+        - RKE2_kube-vip
+    - name: Prepare RKE2 on Servers and Agents # bootstraps the first server_node, copies configs to nodes, saves token to use later
+      ansible.builtin.import_tasks: all/rke2-prepare.yml
+      tags:
+        - RKE2
+        - RKE2_bootstrap
+    - name: Add additional RKE2 Servers # Adds additional servers using the token from the previous task
+      ansible.builtin.import_tasks: server_nodes/add-server.yml
+      when: "'server_nodes' in group_names"
+      tags:
+        - RKE2
+        - RKE2_servers
+    - name: Add agents to the cluster # Adds agents to the cluster
+      ansible.builtin.import_tasks: agent_nodes/add-agent.yml
+      when: "'agent_nodes' in group_names"
+      tags:
+        - RKE2
+        - RKE2_agents
+    - name: Apply manifests after cluster is created # Finish kube-vip, add metallb
+      ansible.builtin.import_tasks: server_nodes/apply-manifests.yml
+      when: "'server_nodes' in group_names"
+      tags:
+        - RKE2
+        - RKE2_apply-manifests
+    - name: Deploy Helm (Happy Helming) # Deploy Helm
+      ansible.builtin.import_tasks: helm/deploy-helm.yml
+      when: inventory_hostname == groups['server_nodes'][0]
+      tags:
+        - RKE2
+        - Helm
+    - name: Deploy Rancher # Deploy Rancher
+      ansible.builtin.import_tasks: rancher/deploy-rancher.yml
+      when: inventory_hostname == groups['server_nodes'][0]
+      tags:
+        - RKE2
+        - Rancher
+
+#   rescue:
+#     - name: RKE2 | Failover
+#       ansible.builtin.set_fact:
+#         task_failed: true
+
+#     - name: RKE2 | Log Failover
+#       ansible.builtin.debug:
+#         msg: "RKE2 setup failed during preparation. Failover initiated."
+
+#   always:
+#     - name: RKE2 | Cleanup
+#       ansible.builtin.debug:
+#         msg: "This runs always, regardless of success or failure."

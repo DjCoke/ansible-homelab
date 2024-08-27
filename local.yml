@@ -1,11 +1,11 @@
 ---
-- hosts: all
-  become: true
-
+# bootstraps first
 ###
 ### Base (for every machine)
 ###
-- hosts: all
+- name: Prepare for all nodes a Base install/bootstrap
+  hosts: all
+  gather_facts: true
   tags: base
   become: true
   roles:
@@ -14,7 +14,8 @@
 ###
 ### Only workstations
 ###
-- hosts: workstations
+- name: Prepare all tasks for only Workstations
+  hosts: workstations
   tags: workstations
   become: true
   roles:
@@ -23,38 +24,51 @@
 ###
 ### Only proxmox
 ###
-- hosts: proxmox
+- name: Prepare all tasks for only Proxmox servers
+  hosts: proxmox
   tags: proxmox
   become: true
   roles:
     - proxmox
 
-
 ###
-### Only proxmox
+### All Servers
 ###
-- hosts: servers
+- name: Prepare all tasks for only Servers
+  hosts: servers
   tags: servers
   become: true
   roles:
     - servers
 
 ###
+### All Servers
+###
+- name: Prepare all tasks for all RKE2 nodes
+  hosts: server_nodes,agent_nodes
+  gather_facts: true
+  tags: RKE2
+  become: true
+  roles:
+    - RKE2
+
+###
 ### end of run cleanup and reporting
 ###
-- hosts: all
+- name: Cleanup the package cache and remove orphan packages
+  hosts: all
   become: true
   tasks:
     - name: Cleanup package cache (debian and ubuntu)
       tags: always
-      apt:
+      ansible.builtin.apt:
         autoclean: true
       changed_when: false
       when: ansible_pkg_mgr == "apt"
 
     - name: Autoremove orphan packages (debian and ubuntu)
       tags: always
-      apt:
+      ansible.builtin.apt:
         autoremove: true
         purge: true
       when: ansible_pkg_mgr == "apt"

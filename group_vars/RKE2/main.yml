@@ -1,0 +1,19 @@
+os: "linux"
+arch: "amd64"
+
+kube_vip_version: "v0.8.0"
+kube_vip_url: "https://raw.githubusercontent.com/kube-vip/kube-vip-cloud-provider/main/manifest/kube-vip-cloud-controller.yaml"
+vip_interface: eth0
+vip: 192.168.1.250
+
+metallb_version: v0.13.12
+lb_range: 192.168.1.220-192.168.1.240
+lb_pool_name: first-pool
+
+rke2_version: "v1.29.4+rke2r1"
+rke2_install_dir: "/usr/local/bin"
+rke2_binary_url: "https://github.com/rancher/rke2/releases/download/{{ rke2_version }}/rke2.linux-amd64"
+
+helm_binary: "/usr/local/bin/helm"
+helm_rancher_repo: "rancher-latest"
+helm_rancher_repo_url: "https://releases.rancher.com/server-charts/latest"

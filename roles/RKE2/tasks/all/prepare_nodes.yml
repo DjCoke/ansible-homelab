@@ -1,0 +1,23 @@
+- name: Enable IPv4 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: true
+  tags: sysctl
+  # This task enables IPv4 forwarding on the system.
+  # The 'sysctl' module is used to set the kernel parameter 'net.ipv4.ip_forward' to 1.
+  # This allows the system to forward IPv4 packets between networks, which is essential for routing.
+  # The 'reload' option ensures that the new setting is applied immediately.
+
+- name: Enable IPv6 forwarding
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
+    reload: true
+  tags: sysctl
+  # This task enables IPv6 forwarding on the system.
+  # The 'sysctl' module is used to set the kernel parameter 'net.ipv6.conf.all.forwarding' to 1.
+  # This allows the system to forward IPv6 packets between networks, which is essential for routing.
+  # The 'reload' option ensures that the new setting is applied immediately.

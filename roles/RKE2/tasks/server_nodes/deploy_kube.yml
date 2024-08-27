@@ -1,0 +1,25 @@
+# Create directory to deploy Kube VIP manifest
+- name: RKE2 | Create directory for Kube VIP Manifest
+  ansible.builtin.file:
+    path: "/var/lib/rancher/rke2/server/manifests"
+    state: directory
+    mode: '0644'
+  # This task creates the directory where the Kube VIP manifest will be deployed.
+  # The 'file' module ensures that the directory exists with the correct permissions.
+  # The directory path is specific to RKE2 and is used to store Kubernetes manifests that will be automatically applied at startup.
+  # The mode '0644' sets the directory's permissions, allowing read and write access for the owner, and read-only access for others.
+
+# Copy Kube VIP configuration to the manifest folder for auto deployment on the first master node
+- name: RKE2 | Deploy Kube VIP Configuration
+  ansible.builtin.template:
+    src: templates/kube-vip-config.j2
+    dest: /var/lib/rancher/rke2/server/manifests/kube-vip.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  when: inventory_hostname == groups['server_nodes'][0]
+  # This task deploys the Kube VIP configuration by copying a template file to the specified manifests directory.
+  # The 'template' module is used to process the template 'kube-vip-config.j2' and render it to '/var/lib/rancher/rke2/server/manifests/kube-vip.yaml'.
+  # The configuration is only deployed on the first master node, as specified by the condition 'inventory_hostname == groups['master_nodes'][0]'.
+  # Setting the file permissions with mode '0644' ensures that the file is readable by all users but only writable by the root user.
+  # The Kube VIP configuration will be automatically applied by RKE2 during the bootstrap process.

@@ -4,6 +4,7 @@ timezone: "Europe/Amsterdam"
 dns_servers:
   - "192.168.1.2"
   - "192.168.1.3"
+ansible_user: erwin
 
 # SSH Settings
 ssh_port: 22
@@ -16,6 +17,9 @@ microcode_intel_install: true
 proxmox_instance: false
 proxmox_vm: true
 raspberry_pi: false
+
+# standard upgrades
+unattended_upgrades: true
 
 # Standard All services are off
 web_server: false
@@ -34,15 +38,17 @@ pihole_server: false
 # Disables the Pi-hole server role, meaning that Pi-hole, an ad-blocking DNS server, will not be installed or configured on this server.
 
 pihole_gravity: false
-# Disables the Pi-hole gravity sync feature, which updates and syncs blocklists across Pi-hole instances. 
+# Disables the Pi-hole gravity sync feature, which updates and syncs blocklists across Pi-hole instances.
 
 syncthing_server: false
 # Disables the Syncthing role for this host, meaning that Syncthing (a continuous file synchronization program) will not be installed or managed.
 
+code_server: false
+# Disables the Code-Server role for this host, meaning that Code-Server will not be installed
+
 # Specific software settings for servers
 nvim: false
-# Disables the installation of Neovim (nvim) on this host. This could be set to false if you prefer to use a different text editor or if nvim is not needed on this server.
+# Disables the installation of Neovim (nvim) on this host.
 
-#debugging?
+# Debugging?
 debugging: false
-
