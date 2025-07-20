@@ -9,13 +9,12 @@ Update in 2025
 Use this playbook to prepare a new node for Homelab inclusion:
 
 ```bash
-ansible-playbook playbooks/bootstrap.yml --ask-become-pass --tags bootstrap -l <host>
+ansible-playbook playbooks/bootstrap.yml --user=ashborn --ask-pass --ask-become-pass --tags bootstrap -l <host>
 
-ansible-playbook playbooks/bootstrap.yml --ask-become-pass --tags bootstrap -l k3s-ashborn.domain.io
 
 This will:
 
-Create the user ashborn
+Create the user defined (in my case ashborn)
 Install your SSH key
 Set timezone, hostname, base packages
 Configure SSH security
