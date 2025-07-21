@@ -1,0 +1,136 @@
+---
+- name: Bootstrap a new node for inclusion into Homelab
+  hosts: all
+  become: true
+  gather_facts: true
+  tags: bootstrap
+
+  tasks:
+    - name: Ensure user "{{ homelab_user }}" exists
+      ansible.builtin.user:
+        name: "{{ homelab_user }}"
+        shell: /bin/bash
+        groups: sudo
+        append: yes
+        create_home: yes
+      tags: bootstrap
+
+    - name: Ensure SSH directory exists for "{{ homelab_user }}"
+      ansible.builtin.file:
+        path: "/home/{{ homelab_user }}/.ssh"
+        state: directory
+        owner: "{{ homelab_user }}"
+        group: "{{ homelab_user }}"
+        mode: 0700
+      tags: bootstrap
+
+    - name: Add authorized key for "{{ homelab_user }}"
+      ansible.builtin.copy:
+        content: "{{ homelab_pubkey }}"
+        dest: "/home/{{ homelab_user }}/.ssh/authorized_keys"
+        owner: "{{ homelab_user }}"
+        group: "{{ homelab_user }}"
+        mode: 0600
+      tags: bootstrap
+
+    - name: Update APT cache (with retry)
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      register: result
+      until: result is succeeded
+      retries: 5
+      delay: 10
+      tags: bootstrap
+
+    - name: Upgrade all packages to latest versions
+      ansible.builtin.apt:
+        upgrade: yes
+        state: latest
+      when: unattended_upgrades | default(false)
+      tags: bootstrap
+
+    - name: Ansible Setup | Ensure ansible is the latest version
+      package:
+        name: ansible
+        state: latest
+      tags: always
+    # This task ensures that the latest version of Ansible is installed on the host.
+    # It will upgrade Ansible if an older version is detected.
+
+    - name: Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)
+      package:
+        name: sudo
+        state: present
+      when: ansible_distribution == "Debian"
+      tags: always
+    # This task ensures that the 'sudo' package is installed on Debian-based systems, such as Proxmox.
+    # 'become: true' is used to escalate privileges to root, necessary for installing packages.
+    # The task only runs if the distribution is identified as Debian.
+    # 'tags: always' ensures that this task is executed every time the playbook runs, regardless of other tags.
+
+    - name: Ansible Setup | Install required packages
+      package:
+        name: "{{ extra_packages }}"
+        state: present
+    # This task installs additional required packages for the playbook.
+    # The packages are specified by the variables `dconf_package` and `python_psutil_package`.
+    - name: Ansible Setup | Install acl package
+      package:
+        name: acl
+      when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    # This task installs the 'acl' package, which is needed for managing access control lists.
+    # It is only installed on Debian-based distributions, as it's already included in Arch Linux.
+
+    - name: Set hostname to match inventory name
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname_short }}"
+      tags: bootstrap
+
+    - name: Set timezone to defined timezone in group_vars/all
+      community.general.timezone:
+        name: "{{ timezone }}"
+      tags: bootstrap
+
+    - name: Disable password login for root (optional)
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin prohibit-password"
+        validate: /usr/sbin/sshd -T -f %s
+      notify: Restart SSH
+      tags: bootstrap
+
+    - name: Ansible Setup | Allow passwordless sudo for user ashborn
+      copy:
+        dest: "/etc/sudoers.d/99-ashborn-nopasswd"
+        content: "ashborn ALL=(ALL) NOPASSWD: ALL\n"
+        owner: root
+        group: root
+        mode: "0440"
+      tags: bootstrap
+
+    - name: Ansible Setup | Install qemu-guest-agent if running in Proxmox VM
+      ansible.builtin.package:
+        name: qemu-guest-agent
+        state: present
+      when: proxmox_vm | bool
+      notify: Ansible Setup | Reboot the VM
+      tags: proxmox_vm
+  # This task installs the 'qemu-guest-agent' package and triggers a reboot if the installation was successful.
+  # The reboot is handled by the 'Ansible Setup | Reboot the node' handler.
+
+  handlers:
+    - name: Ansible Setup | Restart SSH
+      ansible.builtin.service:
+        name: ssh
+        state: restarted
+      tags: bootstrap
+
+    - name: Ansible Setup | Reboot the VM
+      ansible.builtin.reboot:
+        reboot_timeout: 600
+      when: ansible_distribution != "Proxmox"
+  # This handler reboots the node using the 'ansible.builtin.reboot' module.
+  # The 'reboot_timeout' sets the maximum time (in seconds) to wait for the system to reboot and reconnect.
+  # The task checks if the node is not a Proxmox host before reboot

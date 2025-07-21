@@ -1,0 +1,17 @@
+- name: Users | ashborn | Create group
+  tags: users
+  group:
+    name: ashborn
+    state: present
+
+- name: Users | ashborn | Create user
+  tags: users
+  user:
+    name: ashborn
+    group: ashborn
+    groups: "adm,{{ sudo_group }},users"
+    state: present
+    comment: "He rises from the ashes"
+    password: "{{ ashborn_password | password_hash('sha512') }}"
+    update_password: on_create
+    append: true

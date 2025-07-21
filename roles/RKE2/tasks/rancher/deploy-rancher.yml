@@ -1,8 +1,0 @@
-- name: Add Rancher Repo to Helm
-  ansible.builtin.shell: >
-    {{ helm_binary }} repo add
-    {{ helm_rancher_repo }}
-    {{ helm_rancher_repo_url }}
-  become: true
-  become_user: ansible_user
-  changed_when: false

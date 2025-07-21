@@ -1,0 +1,545 @@
+2025-07-21 00:25:59,053 p=10133 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:25:59,071 p=10133 u=erwin n=ansible ERROR| ERROR! Attempting to decrypt but no vault secrets found
+2025-07-21 00:30:30,201 p=10960 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:30:30,205 p=10960 u=erwin n=ansible ERROR| ERROR! Attempting to decrypt but no vault secrets found
+2025-07-21 00:31:07,760 p=11063 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:31:07,769 p=11063 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-21 00:31:07,793 p=11063 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.1.221 port 22: No route to host", "unreachable": true}
+2025-07-21 00:31:07,794 p=11063 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 00:31:07,794 p=11063 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-21 00:33:36,470 p=11436 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:33:36,478 p=11436 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-21 00:33:36,600 p=11436 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ashborn@192.168.1.221: Permission denied (publickey,password).", "unreachable": true}
+2025-07-21 00:33:36,601 p=11436 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 00:33:36,601 p=11436 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-21 00:34:41,943 p=11536 u=erwin n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: 192.168.1.221
+
+2025-07-21 00:34:41,944 p=11536 u=erwin n=ansible ERROR| ERROR! Specified inventory, host pattern and/or --limit leaves us with no hosts to target.
+2025-07-21 00:40:35,939 p=11754 u=erwin n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: 192.168.1.221
+
+2025-07-21 00:40:35,940 p=11754 u=erwin n=ansible ERROR| ERROR! Specified inventory, host pattern and/or --limit leaves us with no hosts to target.
+2025-07-21 00:41:08,817 p=11850 u=erwin n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: ashborn.glind.io
+
+2025-07-21 00:41:08,817 p=11850 u=erwin n=ansible ERROR| ERROR! Specified inventory, host pattern and/or --limit leaves us with no hosts to target.
+2025-07-21 00:41:31,142 p=11949 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:41:31,151 p=11949 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-21 00:41:31,164 p=11949 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "to use the 'ssh' connection type with passwords or pkcs11_provider, you must install the sshpass program"}
+2025-07-21 00:41:31,164 p=11949 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 00:41:31,164 p=11949 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-21 00:43:25,142 p=13814 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:43:25,151 p=13814 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-21 00:43:26,808 p=13814 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:43:26,810 p=13814 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 00:43:27,310 p=13814 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:43:27,312 p=13814 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 00:43:27,805 p=13814 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:43:27,814 p=13814 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 00:43:28,892 p=13814 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 00:43:28,896 p=13814 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 00:43:32,301 p=13814 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 00:43:32,305 p=13814 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 00:44:28,804 p=13814 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 00:44:28,805 p=13814 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 00:44:28,806 p=13814 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=6    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-21 00:59:36,041 p=14483 u=erwin n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: ashborn.glind.io
+
+2025-07-21 00:59:36,042 p=14483 u=erwin n=ansible ERROR| ERROR! Specified inventory, host pattern and/or --limit leaves us with no hosts to target.
+2025-07-21 00:59:47,214 p=14576 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 00:59:47,225 p=14576 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 00:59:48,028 p=14576 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:59:48,034 p=14576 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 00:59:48,529 p=14576 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:59:48,536 p=14576 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 00:59:49,349 p=14576 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:59:49,355 p=14576 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 00:59:50,550 p=14576 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:59:50,556 p=14576 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 00:59:51,487 p=14576 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 00:59:51,496 p=14576 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:00:24,104 p=14576 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:00:24,109 p=14576 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:00:24,117 p=14576 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:00:24,120 p=14576 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:00:24,127 p=14576 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "The task includes an option with an undefined variable.. 'extra_packages' is undefined\n\nThe error appears to be in '/Users/erwin/homelab-ansible/playbooks/bootstrap.yml': line 72, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: Ansible Setup | Install required packages\n      ^ here\n"}
+2025-07-21 01:00:24,127 p=14576 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:00:24,128 p=14576 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=6    changed=1    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:02:50,036 p=14830 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:02:50,048 p=14830 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:02:50,884 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:50,890 p=14830 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:02:51,432 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:51,440 p=14830 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:02:52,303 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:52,309 p=14830 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:02:52,955 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:52,960 p=14830 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:02:53,940 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:53,948 p=14830 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:02:54,716 p=14830 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:02:54,721 p=14830 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:02:54,729 p=14830 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:02:54,733 p=14830 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:02:54,739 p=14830 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "The task includes an option with an undefined variable.. ['{{ dconf_package }}', '{{ python_psutil_package }}', 'smartmontools', 'htop', 'zfsutils-linux', 'bonnie++', 'unzip', 'lm-sensors', 'vim', 'htop', 'curl', 'git', 'fail2ban', 'unzip', 'net-tools', 'ufw', 'ca-certificates']: 'dconf_package' is undefined\n\nThe error appears to be in '/Users/erwin/homelab-ansible/playbooks/bootstrap.yml': line 72, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: Ansible Setup | Install required packages\n      ^ here\n"}
+2025-07-21 01:02:54,740 p=14830 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:02:54,740 p=14830 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=6    changed=0    unreachable=0    failed=1    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:08:04,073 p=15123 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:08:04,084 p=15123 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:08:04,959 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:04,965 p=15123 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:08:05,479 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:05,487 p=15123 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:08:06,338 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:06,344 p=15123 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:08:06,991 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:06,997 p=15123 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:08:07,918 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:07,925 p=15123 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:08:08,639 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:08,645 p=15123 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:08:08,654 p=15123 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:08:08,659 p=15123 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:08:31,840 p=15123 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:08:31,845 p=15123 u=erwin n=ansible INFO| TASK [Ansible Setup | Install acl package] ******************************************************************
+2025-07-21 01:08:33,675 p=15123 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:08:33,680 p=15123 u=erwin n=ansible INFO| TASK [Set hostname to match inventory name] *****************************************************************
+2025-07-21 01:08:34,444 p=15123 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:08:34,451 p=15123 u=erwin n=ansible INFO| TASK [Set timezone to defined timezone in group_vars/all] ***************************************************
+2025-07-21 01:08:35,158 p=15123 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:08:35,160 p=15123 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:08:35,160 p=15123 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=10   changed=3    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:15:12,443 p=16383 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:15:12,454 p=16383 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:15:13,308 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:13,314 p=16383 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:15:13,843 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:13,851 p=16383 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:15:14,689 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:14,694 p=16383 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:15:15,344 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:15,349 p=16383 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:15:16,261 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:16,267 p=16383 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:15:16,986 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:16,992 p=16383 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:15:17,000 p=16383 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:15:17,004 p=16383 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:15:17,834 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:17,839 p=16383 u=erwin n=ansible INFO| TASK [Ansible Setup | Install acl package] ******************************************************************
+2025-07-21 01:15:18,544 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:18,550 p=16383 u=erwin n=ansible INFO| TASK [Ansible Setup | Create ansible log file] **************************************************************
+2025-07-21 01:15:19,042 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:19,051 p=16383 u=erwin n=ansible INFO| TASK [Set hostname to match inventory name] *****************************************************************
+2025-07-21 01:15:19,933 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:19,938 p=16383 u=erwin n=ansible INFO| TASK [Set timezone to defined timezone in group_vars/all] ***************************************************
+2025-07-21 01:15:20,454 p=16383 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:20,459 p=16383 u=erwin n=ansible INFO| TASK [Disable password login for root (optional)] ***********************************************************
+2025-07-21 01:15:20,983 p=16383 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:15:20,993 p=16383 u=erwin n=ansible INFO| RUNNING HANDLER [Restart SSH] *******************************************************************************
+2025-07-21 01:15:21,635 p=16383 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:15:21,636 p=16383 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:15:21,636 p=16383 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=13   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:15:51,749 p=16683 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:15:51,757 p=16683 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:15:52,412 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:52,416 p=16683 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:15:52,937 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:52,947 p=16683 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:15:53,769 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:53,775 p=16683 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:15:54,533 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:54,539 p=16683 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:15:55,403 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:55,409 p=16683 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:15:56,204 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:56,210 p=16683 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:15:56,219 p=16683 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:15:56,223 p=16683 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:15:56,910 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:56,913 p=16683 u=erwin n=ansible INFO| TASK [Ansible Setup | Install acl package] ******************************************************************
+2025-07-21 01:15:57,667 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:57,670 p=16683 u=erwin n=ansible INFO| TASK [Ansible Setup | Create ansible log file] **************************************************************
+2025-07-21 01:15:58,044 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:58,053 p=16683 u=erwin n=ansible INFO| TASK [Set hostname to match inventory name] *****************************************************************
+2025-07-21 01:15:58,823 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:58,829 p=16683 u=erwin n=ansible INFO| TASK [Set timezone to defined timezone in group_vars/all] ***************************************************
+2025-07-21 01:15:59,317 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:59,320 p=16683 u=erwin n=ansible INFO| TASK [Disable password login for root (optional)] ***********************************************************
+2025-07-21 01:15:59,774 p=16683 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:15:59,775 p=16683 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:15:59,776 p=16683 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=12   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:19:58,748 p=16912 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:19:58,759 p=16912 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:19:59,383 p=16912 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "Missing sudo password"}
+2025-07-21 01:19:59,384 p=16912 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:19:59,384 p=16912 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-21 01:23:10,852 p=17057 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:23:10,864 p=17057 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:23:11,765 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:11,772 p=17057 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:23:12,298 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:12,306 p=17057 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:23:13,108 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:13,116 p=17057 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:23:13,897 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:13,902 p=17057 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:23:14,742 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:14,750 p=17057 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:23:15,565 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:15,568 p=17057 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:23:15,575 p=17057 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:23:15,579 p=17057 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:23:16,266 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:16,272 p=17057 u=erwin n=ansible INFO| TASK [Ansible Setup | Install acl package] ******************************************************************
+2025-07-21 01:23:17,093 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:17,098 p=17057 u=erwin n=ansible INFO| TASK [Set hostname to match inventory name] *****************************************************************
+2025-07-21 01:23:17,853 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:17,861 p=17057 u=erwin n=ansible INFO| TASK [Set timezone to defined timezone in group_vars/all] ***************************************************
+2025-07-21 01:23:18,424 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:18,430 p=17057 u=erwin n=ansible INFO| TASK [Disable password login for root (optional)] ***********************************************************
+2025-07-21 01:23:18,944 p=17057 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:18,950 p=17057 u=erwin n=ansible INFO| TASK [Ansible Setup | Allow passwordless sudo for user ashborn] *********************************************
+2025-07-21 01:23:19,904 p=17057 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-21 01:23:19,906 p=17057 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:23:19,906 p=17057 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=12   changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-21 01:23:29,059 p=17264 u=erwin n=ansible INFO| PLAY [Bootstrap a new node for inclusion into Homelab] ******************************************************
+2025-07-21 01:23:29,068 p=17264 u=erwin n=ansible INFO| TASK [Ensure user "ashborn" exists] *************************************************************************
+2025-07-21 01:23:29,596 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:29,603 p=17264 u=erwin n=ansible INFO| TASK [Ensure SSH directory exists for "ashborn"] ************************************************************
+2025-07-21 01:23:30,117 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:30,126 p=17264 u=erwin n=ansible INFO| TASK [Add authorized key for "ashborn"] *********************************************************************
+2025-07-21 01:23:30,906 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:30,912 p=17264 u=erwin n=ansible INFO| TASK [Update APT cache (with retry)] ************************************************************************
+2025-07-21 01:23:31,720 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:31,726 p=17264 u=erwin n=ansible INFO| TASK [Upgrade all packages to latest versions] **************************************************************
+2025-07-21 01:23:32,594 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:32,600 p=17264 u=erwin n=ansible INFO| TASK [Ansible Setup | Ensure ansible is the latest version] *************************************************
+2025-07-21 01:23:33,383 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:33,388 p=17264 u=erwin n=ansible INFO| TASK [Ansible Setup | Make sure that sudo exists (Proxmox does not include sudo by default)] ****************
+2025-07-21 01:23:33,398 p=17264 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-21 01:23:33,402 p=17264 u=erwin n=ansible INFO| TASK [Ansible Setup | Install required packages] ************************************************************
+2025-07-21 01:23:34,082 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:34,088 p=17264 u=erwin n=ansible INFO| TASK [Ansible Setup | Install acl package] ******************************************************************
+2025-07-21 01:23:34,879 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:34,885 p=17264 u=erwin n=ansible INFO| TASK [Set hostname to match inventory name] *****************************************************************
+2025-07-21 01:23:35,487 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:35,495 p=17264 u=erwin n=ansible INFO| TASK [Set timezone to defined timezone in group_vars/all] ***************************************************
+2025-07-21 01:23:35,924 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:35,930 p=17264 u=erwin n=ansible INFO| TASK [Disable password login for root (optional)] ***********************************************************
+2025-07-21 01:23:36,434 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:36,440 p=17264 u=erwin n=ansible INFO| TASK [Ansible Setup | Allow passwordless sudo for user ashborn] *********************************************
+2025-07-21 01:23:37,177 p=17264 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-21 01:23:37,178 p=17264 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-21 01:23:37,179 p=17264 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=12   changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-21 02:15:25,856 p=19507 u=erwin n=ansible ERROR| ERROR! Error when evaluating variable in import path: users/"{{ homelab_user }}".yml.
+
+When using static imports, ensure that any variables used in their names are defined in vars/vars_files
+or extra-vars passed in from the command line. Static imports cannot use variables from facts or inventory
+sources like group or host vars.. 'homelab_user' is undefined
+2025-07-21 02:17:14,890 p=19611 u=erwin n=ansible ERROR| ERROR! Error when evaluating variable in import path: users/{{ homelab_user }}.yml.
+
+When using static imports, ensure that any variables used in their names are defined in vars/vars_files
+or extra-vars passed in from the command line. Static imports cannot use variables from facts or inventory
+sources like group or host vars.. 'homelab_user' is undefined
+2025-07-21 02:19:51,429 p=19768 u=erwin n=ansible ERROR| ERROR! 'import_tasks' is not a valid attribute for a Block
+
+The error appears to be in '/Users/erwin/homelab-ansible/roles/base/tasks/main.yml': line 7, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+- include_tasks: "users/{{ homelab_user }}.yml"
+- import_tasks: users/root.yml
+  ^ here
+
+2025-07-21 02:20:57,892 p=19870 u=erwin n=ansible ERROR| ERROR! 'include_tasks' is not a valid attribute for a Block
+
+The error appears to be in '/Users/erwin/homelab-ansible/roles/base/tasks/main.yml': line 7, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+- include_tasks: "users/{{ homelab_user }}.yml"
+- include_tasks: users/root.yml
+  ^ here
+
+2025-07-22 00:47:03,638 p=86030 u=erwin n=ansible ERROR| ERROR! [DEPRECATED]: community.docker.docker_compose has been removed. This module uses docker-compose v1, which is End of Life since July 2022. Please migrate to community.docker.docker_compose_v2. This feature was removed from community.docker in version 4.0.0. Please update your playbooks.
+
+The error appears to be in '/Users/erwin/homelab-ansible/roles/servers/tasks/portainer/portainer_deploy.yml': line 38, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: Portainer Server | Deployment | Ensure Portainer is running
+  ^ here
+
+2025-07-22 00:49:50,118 p=86300 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 00:49:50,127 p=86300 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 00:49:51,621 p=86300 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:00,158 p=86300 u=erwin n=ansible INFO| fatal: [k3s-beru.glind.io]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.1.223 port 22: Operation timed out", "unreachable": true}
+2025-07-22 00:50:00,159 p=86300 u=erwin n=ansible INFO| fatal: [k3s-igris.glind.io]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.1.222 port 22: Operation timed out", "unreachable": true}
+2025-07-22 00:50:00,159 p=86300 u=erwin n=ansible INFO| fatal: [k3s-tusk.glind.io]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.1.224 port 22: Operation timed out", "unreachable": true}
+2025-07-22 00:50:00,166 p=86300 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 00:50:00,573 p=86300 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:00,581 p=86300 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 00:50:00,589 p=86300 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 00:50:00,592 p=86300 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 00:50:00,595 p=86300 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 00:50:01,341 p=86300 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:01,344 p=86300 u=erwin n=ansible INFO| TASK [Finalizaing | Autoremove orphan packages (debian and ubuntu)] *****************************************
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=4    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| k3s-beru.glind.io          : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| k3s-igris.glind.io         : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 00:50:02,097 p=86300 u=erwin n=ansible INFO| k3s-tusk.glind.io          : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2025-07-22 00:50:41,509 p=86485 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 00:50:41,516 p=86485 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 00:50:41,929 p=86485 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:41,935 p=86485 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 00:50:41,942 p=86485 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 00:50:41,949 p=86485 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 00:50:41,953 p=86485 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 00:50:42,783 p=86485 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:42,789 p=86485 u=erwin n=ansible INFO| TASK [Finalizaing | Autoremove orphan packages (debian and ubuntu)] *****************************************
+2025-07-22 00:50:43,681 p=86485 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:50:43,682 p=86485 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 00:50:43,683 p=86485 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 00:52:26,032 p=86766 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 00:52:26,039 p=86766 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 00:52:26,710 p=86766 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:52:26,716 p=86766 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 00:52:26,724 p=86766 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 00:52:26,731 p=86766 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 00:52:26,735 p=86766 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 00:52:27,645 p=86766 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:52:27,651 p=86766 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 00:52:28,561 p=86766 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:52:28,562 p=86766 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 00:52:28,562 p=86766 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 00:57:47,194 p=87215 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 00:57:47,205 p=87215 u=erwin n=ansible INFO| TASK [base : Debug | Show value of role_path] ***************************************************************
+2025-07-22 00:57:47,214 p=87215 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "role_path is: /Users/erwin/homelab-ansible/roles/base"
+}
+2025-07-22 00:57:47,217 p=87215 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 00:57:47,979 p=87215 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:57:47,988 p=87215 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 00:57:47,996 p=87215 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 00:57:48,000 p=87215 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 00:57:48,005 p=87215 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 00:57:48,994 p=87215 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:57:49,000 p=87215 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 00:57:50,008 p=87215 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:57:50,008 p=87215 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 00:57:50,009 p=87215 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=4    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 00:59:13,609 p=87552 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 00:59:13,618 p=87552 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 00:59:14,359 p=87552 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:59:14,366 p=87552 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 00:59:14,377 p=87552 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 00:59:14,384 p=87552 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 00:59:14,388 p=87552 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 00:59:15,212 p=87552 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:59:15,218 p=87552 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 00:59:16,101 p=87552 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 00:59:16,102 p=87552 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 00:59:16,102 p=87552 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 01:01:41,240 p=87921 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:01:41,250 p=87921 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:01:41,918 p=87921 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:01:41,924 p=87921 u=erwin n=ansible INFO| TASK [base : Debug | Show ansible_distribution] *************************************************************
+2025-07-22 01:01:41,934 p=87921 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:01:41,940 p=87921 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:01:41,947 p=87921 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:01:41,951 p=87921 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:01:41,954 p=87921 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:01:42,872 p=87921 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:01:42,878 p=87921 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:01:43,797 p=87921 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:01:43,798 p=87921 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:01:43,799 p=87921 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=4    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2025-07-22 01:05:49,247 p=88306 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:05:49,257 p=88306 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:05:49,923 p=88306 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:05:49,929 p=88306 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:05:49,937 p=88306 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:05:49,944 p=88306 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:05:49,950 p=88306 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:05:49,954 p=88306 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:05:49,957 p=88306 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:05:50,793 p=88306 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:05:50,799 p=88306 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:05:51,615 p=88306 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:05:51,616 p=88306 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:05:51,616 p=88306 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=3    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:10:04,748 p=88703 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:10:04,759 p=88703 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:10:05,536 p=88703 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:10:05,543 p=88703 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:10:05,551 p=88703 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:10:05,558 p=88703 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:10:05,565 p=88703 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:10:05,568 p=88703 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:10:05,576 p=88703 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:10:05,580 p=88703 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:10:05,583 p=88703 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:10:06,306 p=88703 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:10:06,312 p=88703 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:10:07,222 p=88703 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:10:07,224 p=88703 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:10:07,224 p=88703 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=4    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:13:20,404 p=89019 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:13:20,415 p=89019 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:13:20,427 p=89019 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:13:20,430 p=89019 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:13:21,140 p=89019 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:13:21,150 p=89019 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:13:21,159 p=89019 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:13:21,163 p=89019 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:13:21,170 p=89019 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:13:21,174 p=89019 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:13:21,182 p=89019 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:13:21,186 p=89019 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:13:21,189 p=89019 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:13:21,907 p=89019 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:13:21,912 p=89019 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:13:22,810 p=89019 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:13:22,811 p=89019 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:13:22,811 p=89019 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=5    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:19:21,599 p=89686 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:19:21,610 p=89686 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:19:21,619 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:19:21,621 p=89686 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:19:21,627 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:19:21,631 p=89686 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:19:21,638 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:19:21,641 p=89686 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:19:22,350 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:19:22,357 p=89686 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:19:22,365 p=89686 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:19:22,369 p=89686 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:19:22,376 p=89686 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:19:22,380 p=89686 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:19:22,388 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:19:22,392 p=89686 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:19:22,395 p=89686 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:19:23,184 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:19:23,190 p=89686 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:19:24,073 p=89686 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:19:24,075 p=89686 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:19:24,075 p=89686 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=7    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:21:51,580 p=89966 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:21:51,588 p=89966 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:21:53,324 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:21:53,327 p=89966 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:21:53,337 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:21:53,339 p=89966 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:21:53,348 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:21:53,353 p=89966 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:21:53,361 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:21:53,363 p=89966 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:21:53,835 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:21:53,843 p=89966 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:21:53,855 p=89966 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:21:53,858 p=89966 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:21:53,865 p=89966 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:21:53,868 p=89966 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:21:53,876 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:21:53,879 p=89966 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:21:53,881 p=89966 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:21:55,054 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:21:55,058 p=89966 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:21:55,935 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:21:55,942 p=89966 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:21:56,782 p=89966 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:21:56,783 p=89966 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:21:56,783 p=89966 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=9    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:26:37,169 p=92097 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:26:37,177 p=92097 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:26:38,733 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:26:38,736 p=92097 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:26:38,745 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:26:38,747 p=92097 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:26:38,755 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:26:38,759 p=92097 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:26:38,767 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:26:38,769 p=92097 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:26:39,250 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:26:39,255 p=92097 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:26:39,263 p=92097 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:26:39,266 p=92097 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:26:39,273 p=92097 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:26:39,275 p=92097 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:26:39,284 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:26:39,287 p=92097 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:26:39,289 p=92097 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:26:40,642 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:26:40,647 p=92097 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:26:41,386 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:26:41,391 p=92097 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:26:42,282 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:26:42,283 p=92097 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:26:42,283 p=92097 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=9    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   

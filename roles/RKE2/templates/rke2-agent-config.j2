@@ -1,5 +1,0 @@
-write-kubeconfig-mode: "0644"
-token: {{ hostvars['RKE2-server1']['token'] }}
-server: https://{{ hostvars['RKE2-server1']['ansible_host'] }}:9345
-node-label:
-  - "agent=true"

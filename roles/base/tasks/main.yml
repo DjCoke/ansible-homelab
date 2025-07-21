@@ -1,56 +1,30 @@
-# Load distro-specific variables
-- include_vars: "{{ ansible_distribution }}.yml"
+---
+- name: "DEBUG | Path to check for distro-specific config"
+  debug:
+    msg: "Looking for file: {{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+
+- name: DEBUG | Show ansible_distribution
+  debug:
+    var: ansible_distribution
+
+- name: DEBUG | Show full stat path
+  debug:
+    msg: "Checking path: {{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+
+- name: "{{ role_name }} | Checking for Distribution Config: {{ ansible_distribution }}"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  register: distribution_config
+
+- name: "{{ role_name }} | Run Tasks: {{ ansible_distribution }}"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists
+
+- debug:
+    msg: "Including: {{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists
+
+- name: "{{ role_name }} | Debug output of distribution_config"
+  ansible.builtin.debug:
+    var: distribution_config
   tags: always
-
-- block:
-    # Make sure users exist on the system
-    - import_tasks: users/erwin.yml
-    - import_tasks: users/root.yml
-    
-    # Set up the ansible environment
-    - import_tasks: ansible_setup.yml
-      tags:
-        - ansible_setup
-        - bootstrap
-
-    # install software
-    - ansible.builtin.import_tasks: software/repositories.yml
-    
-    # install software/proxmox_repositories.yml
-    - ansible.builtin.import_tasks: software/proxmox_repositories.yml
-      tags:
-        - proxmox_server
-        - bootstrap
-      when: proxmox_server
-
-    - import_tasks: software/packages_development.yml
-    - import_tasks: software/packages_cleanup.yml
-    - import_tasks: software/packages_utilities.yml
-    - import_tasks: software/nvim.yml
-      when: nvim is true
-
-    # Perform remaining tasks:
-    - import_tasks: system_setup/clock.yml
-      tags:
-        - clock
-    #  - import_tasks: system_setup/cron.yml
-    - import_tasks: system_setup/locale.yml
-    - import_tasks: system_setup/logging.yml
-    # - import_tasks: system_setup/memory.yml
-    - import_tasks: system_setup/microcode.yml
-    - import_tasks: system_setup/openssh.yml
-    - import_tasks: system_setup/scripts.yml
-
-    # Perform install of ohmyzsh and p10k
-    - include_vars: ohmyzsh.yml
-    - import_tasks: ohmyzsh/setup-ohmyzsh.yml
-    - import_tasks: ohmyzsh/themes.yml
-    - import_tasks: ohmyzsh/plugins.yml
-    - include_vars: p10k.yml
-    - include_vars: "{{ p10k_style[p10k_prompt_style] }}.yml"
-    - import_tasks: ohmyzsh/setup-p10k.yml
-    - import_tasks: ohmyzsh/p10k-fonts.yml
-    - import_tasks: ohmyzsh/p10k-configure.yml
-
-  rescue:
-    - set_fact: task_failed=true
