@@ -1,4 +1,0 @@
-# Host specific
-# These settings are unique to this particular host.
-
-hostname: k3s-admin.local.glind.io
