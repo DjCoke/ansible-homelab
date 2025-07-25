@@ -1,19 +1,92 @@
 ---
 - name: "System | {{ ansible_distribution }} | Update APT Repos and Upgrade APT Packages"
   ansible.builtin.apt:
-    update_cache: true
+    update_cache: yes
+    cache_valid_time: 3600
     upgrade: full
     autoremove: true
     autoclean: true
-  become: true
+  register: result
+  until: result is succeeded
+  # This task updates the apt package cache, ensuring it is refreshed.
+  # The cache is considered valid for 3600 seconds (1 hour).
+  # The task will retry until the cache update succeeds.
 
-- name: "System | {{ ansible_distribution }} | Install"
+- name: "System | {{ ansible_distribution }} | Upgrade all packages"
+  ansible.builtin.apt:
+    upgrade: yes
+    state: latest
+  when: unattended_upgrades
+  # This task upgrades all installed packages on the system to their latest versions.
+  # It only runs if the variable 'keep_packages_updated' is set to true.
+
+- name: "System | {{ ansible_distribution }} | Ensure ansible is the latest version"
+  package:
+    name: ansible
+    state: latest
+  # This task ensures that the latest version of Ansible is installed on the host.
+  # It will upgrade Ansible if an older version is detected.
+
+- name: "System | {{ ansible_distribution }} | Install System Apps"
   ansible.builtin.apt:
     name:
       - jq
       - open-iscsi
+      - dconf-cli
+      - python3-psutil
+      - smartmontools
+      - htop
+      - bonnie++
+      - unzip
+      - lm-sensors
+      - htop
+      - curl
+      - git
+      - unzip
+      - net-tools
+      - acl
     state: present
   become: true
+
+- name: "System | {{ ansible_distribution }} | Create ansible log file"
+  file:
+    path: /var/log/ansible.log
+    owner: "{{ homelab_user }}"
+    group: root
+    mode: 0664
+    state: touch
+  changed_when: False
+  # This task creates the Ansible log file at /var/log/ansible.log if it doesn't already exist.
+  # The file is owned by the 'homelab_user' user and has permissions set to 0664.
+  # The task does not report changes if the file already exists.
+
+- name: "System | {{ ansible_distribution }} | Add logrotate config for ansible log file"
+  copy:
+    src: files/logrotate
+    dest: /etc/logrotate.d/ansible
+    owner: root
+    group: root
+    mode: 0644
+  # This task installs a logrotate configuration file for the Ansible log.
+  # The configuration file is copied to /etc/logrotate.d/ansible and sets up automatic log rotation.
+  # The file is owned by root with permissions set to 0644.
+
+- name: "System | {{ ansible_distribution }} | Remove default ansible directory (/etc/ansible) from host"
+  file:
+    path: /etc/ansible
+    state: absent
+  # This task removes the default Ansible directory (/etc/ansible) if it exists.
+  # This is useful if you want to avoid using the default configuration directory.
+
+- name: "System | {{ ansible_distribution }} | Install qemu-guest-agent if running in Proxmox VM"
+  ansible.builtin.package:
+    name: qemu-guest-agent
+    state: present
+  when: proxmox_vm | bool
+  notify: System | Reboot
+  tags: proxmox_vm
+  # This task installs the 'qemu-guest-agent' package and triggers a reboot if the installation was successful.
+  # The reboot is handled by the 'Ansible Setup | Reboot the node' handler.
 
 - name: System | Detecting win32yank
   ansible.builtin.stat:

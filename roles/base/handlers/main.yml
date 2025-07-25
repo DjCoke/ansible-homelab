@@ -1,0 +1,8 @@
+- name: System | Reboot
+  ansible.builtin.reboot:
+    reboot_timeout: 600
+  when: ansible_distribution != "Proxmox"
+  # This handler reboots the node using the 'ansible.builtin.reboot' module.
+  # The 'reboot_timeout' sets the maximum time (in seconds) to wait for the system to reboot and reconnect.
+  # The task checks if the node is not a Proxmox host before rebooting, as Proxmox nodes generally manage reboots differently.
+  

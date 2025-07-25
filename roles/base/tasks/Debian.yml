@@ -1,0 +1,34 @@
+---
+- name: "System | {{ ansible_distribution }} | Update APT Repos and Upgrade APT Packages"
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    upgrade: full
+    autoremove: true
+    autoclean: true
+  register: result
+  until: result is succeeded
+  # This task updates the apt package cache, ensuring it is refreshed.
+  # The cache is considered valid for 3600 seconds (1 hour).
+  # The task will retry until the cache update succeeds.
+
+- name: "System | {{ ansible_distribution }} | Upgrade all packages"
+  ansible.builtin.apt:
+    upgrade: yes
+    state: latest
+  when: unattended_upgrades
+  # This task upgrades all installed packages on the system to their latest versions.
+  # It only runs if the variable 'keep_packages_updated' is set to true.
+
+- name: "System | {{ ansible_distribution }} | Ensure ansible is the latest version"
+  package:
+    name: ansible
+    state: latest
+  # This task ensures that the latest version of Ansible is installed on the host.
+  # It will upgrade Ansible if an older version is detected.
+
+- name: "System | {{ ansible_distribution }} | Make sure that sudo exists (Proxmox does not include sudo by default)"
+  package:
+    name: sudo
+    state: present
+  # This task ensures that the 'sudo' package is installed on Debian-based systems, such as Proxmox.

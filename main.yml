@@ -1,0 +1,51 @@
+---
+# Inspired by https://github.com/TechDufus/dotfiles
+# This structure bootstraps and configures all Homelab hosts consistently using Ansible.
+# 
+# Step 1: Run common setup tasks (timezone, sudo, etc.) across all hosts.
+# Step 2: Use group-specific role lists (from group_vars) to apply tailored configurations.
+# Step 3: Dynamically execute only relevant roles per host/group based on `default_roles` and optional tag filtering.
+#
+# Note: Role execution can be filtered by tag (e.g. --tags base), and supports optional `exclude_roles` in group_vars/host_vars.
+
+- name: Prepare all hosts based on group-specific roles
+  hosts: all
+  gather_facts: true
+  become: true
+
+  pre_tasks:
+    # Detect if the host is running in WSL
+    # Some roles (e.g. clipboard support or win32yank) rely on this distinction.
+    - name: Detect if host is WSL
+      import_tasks: pre_tasks/detect_wsl.yml
+      tags: always
+
+    # Detect if the host is running in a VM
+    # Some roles (e.g. qemu-agent install) rely on this distinction.
+    - name: Detect if host is a VM
+      import_tasks: pre_tasks/detect_vm.yml
+      tags: always
+
+    # Determine which roles to apply
+    # If specific tags are passed (e.g. --tags base), run only those.
+    # Otherwise, use the list defined in group_vars/<group>/default_roles,
+    # excluding any roles listed in `exclude_roles`.
+    - name: Set roles to run (filtered by tag or default_roles)
+      set_fact:
+        run_roles: >-
+          {{ ansible_run_tags != ['all'] and ansible_run_tags
+             or default_roles | difference(exclude_roles | default([])) | sort }}
+      tags: always
+
+  tasks:
+    # Dynamically include and execute the selected roles.
+    # Each role gets its own tag, so you can still run: `--tags workstation`, etc.
+    - name: Run selected roles
+      include_role:
+        name: "{{ roles_item }}"
+        apply:
+          tags: "{{ roles_item }}"
+      loop: "{{ run_roles }}"
+      loop_control:
+        loop_var: roles_item
+      tags: always

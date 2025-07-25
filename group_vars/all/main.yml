@@ -45,3 +45,10 @@ debugging: false
 # REQUIRED: Your name for git commits and configurations
 # This will be used for git config user.name
 git_user_name: "DjCoke"
+
+# --------------------------------------------------------------------
+# ROLE CONFIGURATION
+# --------------------------------------------------------------------
+default_roles:
+  - base
+  - fonts
