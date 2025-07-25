@@ -543,3 +543,112 @@ The offending line appears to be:
 2025-07-22 01:26:42,282 p=92097 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
 2025-07-22 01:26:42,283 p=92097 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
 2025-07-22 01:26:42,283 p=92097 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=9    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:33:26,273 p=94824 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:33:26,282 p=94824 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:33:27,910 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:33:27,913 p=94824 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:33:27,921 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:33:27,924 p=94824 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:33:27,932 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:33:27,935 p=94824 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:33:27,943 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:33:27,946 p=94824 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:33:28,341 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:33:28,347 p=94824 u=erwin n=ansible INFO| TASK [base : base | Run Tasks: Ubuntu] **********************************************************************
+2025-07-22 01:33:28,355 p=94824 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:33:28,358 p=94824 u=erwin n=ansible INFO| TASK [base : debug] *****************************************************************************************
+2025-07-22 01:33:28,365 p=94824 u=erwin n=ansible INFO| skipping: [k3s-ashborn.glind.io]
+2025-07-22 01:33:28,368 p=94824 u=erwin n=ansible INFO| TASK [base : base | Debug output of distribution_config] ****************************************************
+2025-07-22 01:33:28,376 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "distribution_config": {
+        "changed": false,
+        "failed": false,
+        "stat": {
+            "exists": false
+        }
+    }
+}
+2025-07-22 01:33:28,379 p=94824 u=erwin n=ansible INFO| PLAY [Finalizing | Cleanup the package cache and remove orphan packages] ************************************
+2025-07-22 01:33:28,382 p=94824 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:33:29,664 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:33:29,668 p=94824 u=erwin n=ansible INFO| TASK [Finalizing | Cleanup package cache (debian and ubuntu)] ***********************************************
+2025-07-22 01:33:30,472 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:33:30,478 p=94824 u=erwin n=ansible INFO| TASK [Finalizing | Autoremove orphan packages (debian and ubuntu)] ******************************************
+2025-07-22 01:33:31,386 p=94824 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:33:31,387 p=94824 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:33:31,388 p=94824 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=9    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+2025-07-22 01:40:29,232 p=95387 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:40:29,241 p=95387 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:40:30,739 p=95387 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:40:30,742 p=95387 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:40:30,750 p=95387 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:40:30,752 p=95387 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:40:30,758 p=95387 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:40:30,761 p=95387 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:40:30,768 p=95387 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:40:30,770 p=95387 u=erwin n=ansible INFO| TASK [base : base | Checking for Distribution Config: Ubuntu] ***********************************************
+2025-07-22 01:40:30,898 p=95387 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io -> localhost]: FAILED! => {"changed": false, "module_stderr": "sudo: a password is required\n", "module_stdout": "", "msg": "MODULE FAILURE: No start of json char found\nSee stdout/stderr for the exact error", "rc": 1}
+2025-07-22 01:40:30,898 p=95387 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:40:30,898 p=95387 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=4    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-22 01:49:08,946 p=17449 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] ****************************************************
+2025-07-22 01:49:08,954 p=17449 u=erwin n=ansible INFO| TASK [Gathering Facts] **************************************************************************************
+2025-07-22 01:49:10,449 p=17449 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:49:10,453 p=17449 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] **********************************************
+2025-07-22 01:49:10,461 p=17449 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:49:10,463 p=17449 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] *************************************************************
+2025-07-22 01:49:10,470 p=17449 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-22 01:49:10,473 p=17449 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *******************************************************************
+2025-07-22 01:49:10,480 p=17449 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-22 01:49:10,482 p=17449 u=erwin n=ansible INFO| TASK [base : Include distro-specific tasks if they exist] ***************************************************
+2025-07-22 01:49:10,495 p=17449 u=erwin n=ansible INFO| included: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml for k3s-ashborn.glind.io
+2025-07-22 01:49:10,497 p=17449 u=erwin n=ansible INFO| TASK [base : System | Ubuntu | Update APT Repos and Upgrade APT Packages] ***********************************
+2025-07-22 01:49:14,717 p=17449 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-22 01:49:14,722 p=17449 u=erwin n=ansible INFO| TASK [base : System | Ubuntu | Install] *********************************************************************
+2025-07-22 01:49:16,966 p=17449 u=erwin n=ansible INFO| changed: [k3s-ashborn.glind.io]
+2025-07-22 01:49:16,971 p=17449 u=erwin n=ansible INFO| TASK [base : System | Detecting win32yank] ******************************************************************
+2025-07-22 01:49:16,979 p=17449 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "The conditional check 'ansible_host_environment_is_wsl' failed. The error was: error while evaluating conditional (ansible_host_environment_is_wsl): 'ansible_host_environment_is_wsl' is undefined\n\nThe error appears to be in '/Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml': line 18, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n- name: System | Detecting win32yank\n  ^ here\n"}
+2025-07-22 01:49:16,979 p=17449 u=erwin n=ansible INFO| PLAY RECAP **************************************************************************************************
+2025-07-22 01:49:16,979 p=17449 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=7    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-07-24 21:25:54,230 p=47626 u=erwin n=ansible INFO| PLAY [Prepare for Base | All your base are belong to us] **************************************************************************************************************
+2025-07-24 21:25:54,238 p=47626 u=erwin n=ansible INFO| TASK [Gathering Facts] ************************************************************************************************************************************************
+2025-07-24 21:26:02,264 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-24 21:26:02,269 p=47626 u=erwin n=ansible INFO| TASK [base : DEBUG | Path to check for distro-specific config] ********************************************************************************************************
+2025-07-24 21:26:02,278 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Looking for file: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-24 21:26:02,280 p=47626 u=erwin n=ansible INFO| TASK [base : DEBUG | Show ansible_distribution] ***********************************************************************************************************************
+2025-07-24 21:26:02,288 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "ansible_distribution": "Ubuntu"
+}
+2025-07-24 21:26:02,290 p=47626 u=erwin n=ansible INFO| TASK [base : DEBUG | Show full stat path] *****************************************************************************************************************************
+2025-07-24 21:26:02,298 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io] => {
+    "msg": "Checking path: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml"
+}
+2025-07-24 21:26:02,300 p=47626 u=erwin n=ansible INFO| TASK [base : Include distro-specific tasks if they exist] *************************************************************************************************************
+2025-07-24 21:26:02,317 p=47626 u=erwin n=ansible INFO| included: /Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml for k3s-ashborn.glind.io
+2025-07-24 21:26:02,320 p=47626 u=erwin n=ansible INFO| TASK [base : System | Ubuntu | Update APT Repos and Upgrade APT Packages] *********************************************************************************************
+2025-07-24 21:26:09,339 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-24 21:26:09,345 p=47626 u=erwin n=ansible INFO| TASK [base : System | Ubuntu | Install] *******************************************************************************************************************************
+2025-07-24 21:26:11,874 p=47626 u=erwin n=ansible INFO| ok: [k3s-ashborn.glind.io]
+2025-07-24 21:26:11,879 p=47626 u=erwin n=ansible INFO| TASK [base : System | Detecting win32yank] ****************************************************************************************************************************
+2025-07-24 21:26:11,891 p=47626 u=erwin n=ansible INFO| fatal: [k3s-ashborn.glind.io]: FAILED! => {"msg": "The conditional check 'ansible_host_environment_is_wsl' failed. The error was: error while evaluating conditional (ansible_host_environment_is_wsl): 'ansible_host_environment_is_wsl' is undefined\n\nThe error appears to be in '/Users/erwin/homelab-ansible/roles/base/tasks/Ubuntu.yml': line 18, column 3, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n- name: System | Detecting win32yank\n  ^ here\n"}
+2025-07-24 21:26:11,892 p=47626 u=erwin n=ansible INFO| PLAY RECAP ************************************************************************************************************************************************************
+2025-07-24 21:26:11,892 p=47626 u=erwin n=ansible INFO| k3s-ashborn.glind.io       : ok=7    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
