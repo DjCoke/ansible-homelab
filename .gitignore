@@ -1,0 +1,53 @@
+# Ansible log file
+ansible.log
+
+# Ansible retry files (bij failures)
+*.retry
+
+# Ansible facts cache
+.fact-cache/
+.cache/
+
+# Python __pycache__
+__pycache__/
+*.pyc
+*.pyo
+
+# SSH config backups
+*.bak
+*.swp
+
+# Inventory backup
+inventory_backup/
+
+# Secret vars files (pas aan op je structuur)
+group_vars/*vault*
+host_vars/*vault*
+secrets.yml
+vault.yml
+
+# Editor/IDE folders
+.vscode/
+.idea/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Docker artifacts (indien van toepassing)
+*.pid
+*.sock
+.env
+docker-compose.override.yml
+
+# Terraform files (als je Terraform gebruikt)
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Backup files
+*~
+*.orig
+
+# hosts
+192.*
