@@ -1,0 +1,20 @@
+- name: Detect if host is a virtual machine (Proxmox VM or otherwise)
+  ansible.builtin.shell: |
+    if grep -q '^flags.*\ hypervisor' /proc/cpuinfo; then
+      echo true
+    else
+      echo false
+    fi
+  register: is_virtual
+  args:
+    executable: /bin/bash
+  changed_when: false
+  ignore_errors: true
+
+- name: Register VM State fact
+  ansible.builtin.set_fact:
+    proxmox_vm: "{{ is_virtual.stdout | default('false') | bool }}"
+
+- name: Show Proxmox VM State
+  ansible.builtin.debug:
+    msg: "proxmox_vm: {{ proxmox_vm }}"
