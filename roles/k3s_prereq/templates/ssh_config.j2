@@ -1,0 +1,6 @@
+{% for host in groups['k3s_cluster'] %}
+Host {{ host }}
+  User root
+  IdentityFile /root/.ssh/k3s
+  IdentitiesOnly yes
+{% endfor %}

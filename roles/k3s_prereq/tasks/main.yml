@@ -1,0 +1,66 @@
+---
+- name: "Preparing k3s_cluster | SSH | Ensure .ssh directory for root exists"
+  ansible.builtin.file:
+    path: "/root/.ssh"
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: "Update /etc/hosts with all cluster hostnames"
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    state: present
+    create: true
+    line: "{{ hostvars[item].ansible_host }} {{ item }}"
+    regexp: "^{{ hostvars[item].ansible_host }}\\s+{{ item }}$"
+    owner: root
+    group: root
+    mode: '0644'
+  loop: "{{ groups['k3s_cluster'] }}"
+  when: hostvars[item].ansible_host is defined
+  tags: hosts
+
+- name: "Preparing k3s_cluster | SSH | Copy SSH keys to /root/.ssh from Ansible Vault"
+  block:
+    - name: "SSH | Deploy [k3s] private key"
+      ansible.builtin.copy:
+        dest: /root/.ssh/k3s
+        content: "{{ k3s_ssh_private_key }}"
+        owner: root
+        group: root
+        mode: "0600"
+      no_log: true
+
+    - name: "Preparing k3s_cluster | SSH | Deploy [k3s] public key"
+      ansible.builtin.copy:
+        dest: /root/.ssh/k3s.pub
+        content: "{{ k3s_ssh_public_key }}"
+        owner: root
+        group: root
+        mode: "0644"
+      no_log: true
+
+    - name: "Force only cluster public key in authorized_keys"
+      ansible.builtin.copy:
+        dest: /root/.ssh/authorized_keys
+        content: "{{ k3s_ssh_public_key }}"
+        owner: root
+        group: root
+        mode: "0600"
+
+    - name: "Preparing k3s_cluster | SSH | Ensure /root/.ssh/config is deployed"
+      ansible.builtin.template:
+        src: ssh_config.j2
+        dest: /root/.ssh/config
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: "Preparing k3s_cluster | SSH | Populate known_hosts with all cluster members"
+      ansible.builtin.known_hosts:
+        path: /root/.ssh/known_hosts
+        name: "{{ hostvars[item].ansible_host | default(item) }}"
+        key: "{{ lookup('pipe', 'ssh-keyscan -H ' ~ (hostvars[item].ansible_host | default(item))) }}"
+      loop: "{{ groups['k3s_cluster'] }}"
+      when: hostvars[item].ansible_host is defined or item is match('.*\.glind\.io')

@@ -8,7 +8,7 @@
 #
 # Note: Role execution can be filtered by tag (e.g. --tags base), and supports optional `exclude_roles` in group_vars/host_vars.
 
-- name: Prepare all hosts based on group-specific roles
+- name: Prepare all hosts
   hosts: all
   gather_facts: true
   become: true
@@ -41,6 +41,41 @@
         run_roles: >-
           {{ ansible_run_tags != ['all'] and ansible_run_tags
              or default_roles | difference(exclude_roles | default([])) | sort }}
+      tags: always
+
+  tasks:
+    # Dynamically include and execute the selected roles.
+    # Each role gets its own tag, so you can still run: `--tags workstation`, etc.
+    - name: Run selected roles
+      ansible.builtin.include_role:
+        name: "{{ roles_item }}"
+        apply:
+          tags: "{{ roles_item }}"
+      loop: "{{ run_roles }}"
+      loop_control:
+        loop_var: roles_item
+      tags: always
+
+- name: Prepare all tasks for all K3S nodes
+  hosts: k3s_cluster
+  gather_facts: true
+  become: true
+  pre_tasks:
+    - name: Verify Ansible is version 2.11 or above. (If this fails you may need to update Ansible)
+      ansible.builtin.assert:
+        that: ansible_version.full is version_compare('2.11', '>=')
+        msg: >
+          "Ansible is out of date. See here for more info: https://docs.technotim.live/posts/ansible-automation/"
+
+    # Determine which roles to apply.
+    # If specific tags were provided via --tags (e.g. --tags base),
+    # then the corresponding roles are already included earlier (in the "all" block).
+    # In that case, run_roles should be empty to avoid duplicate role execution.
+    # Only when no specific tags are passed, we use the list defined in group_vars/<group>/k3s_roles,
+    # excluding any roles listed in `exclude_roles`.
+    - name: Set roles to run for k3s cluster
+      ansible.builtin.set_fact:
+        run_roles: "{{ [] if ansible_run_tags != ['all'] else (k3s_roles | difference(exclude_roles | default([])) | sort) }}"
       tags: always
 
   tasks:
