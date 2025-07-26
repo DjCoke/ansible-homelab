@@ -15,7 +15,9 @@ ansible_user: "{{ homelab_user }}"
 
 # SSH Settings
 ssh_port: 22
-ssh_users: "{{ homelab_user }}"
+ssh_users:
+  - "{{ homelab_user }}"
+  - root
 
 # REQUIRED: Your name for git commits and configurations
 # This will be used for git config user.name
@@ -36,3 +38,6 @@ default_roles:
   - fonts
   - locale
   - openssh
+
+k3s_roles:
+  - k3s_prereq
