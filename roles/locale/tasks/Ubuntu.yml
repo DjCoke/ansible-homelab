@@ -1,0 +1,18 @@
+- name: "System | {{ ansible_distribution }} | Ensure en_US.UTF-8 is generated"
+  ansible.builtin.locale_gen:
+    name: en_US.UTF-8
+    state: present
+  register: locale_added
+
+- name: "System | {{ ansible_distribution }} | Set LANG in /etc/default/locale"
+  ansible.builtin.lineinfile:
+    path: /etc/default/locale
+    regexp: "^LANG="
+    line: "LANG=en_US.UTF-8"
+    create: true
+  when: locale_added.changed
+
+- name: Remove en_GB.UTF-8 if present
+  ansible.builtin.locale_gen:
+    name: en_GB.UTF-8
+    state: absent

@@ -1,0 +1,39 @@
+- name: Users | root | Ensure account is locked (except for proxmox_server)
+  user:
+    name: root
+    password_lock: true
+  when: not proxmox_server
+
+- name: Users | Make sure that sudo exists
+  package:
+    name: sudo
+    state: present
+
+- name: "Users | {{ homelab_user}} | Create group"
+  group:
+    name: "{{ homelab_user }}"
+    state: present
+
+- name: "Users | {{ homelab_user }} | Create or update user"
+  ansible.builtin.user:
+    name: "{{ homelab_user }}"
+    group: "{{ homelab_user }}"
+    groups: adm,root,users
+    state: present
+    comment: "He rises from the ashes"
+    password: "{{ homelab_user_password_hash }}"
+    update_password: always
+    append: true
+
+- name: "Users | {{ homelab_user }} | Add sudoers file"
+  ansible.builtin.template:
+    src: sudoers_homelab_user.j2
+    dest: "/etc/sudoers.d/{{ homelab_user }}"
+    owner: root
+    group: root
+    mode: "0440"
+
+- name: "Users | {{ homelab_user }} | Add public key"
+  authorized_key:
+    user: "{{ homelab_user }}"
+    key: "{{ homelab_user_pubkey }}"

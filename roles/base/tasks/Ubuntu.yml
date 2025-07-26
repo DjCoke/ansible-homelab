@@ -45,6 +45,7 @@
       - unzip
       - net-tools
       - acl
+      - locales
     state: present
   become: true
 
@@ -84,9 +85,16 @@
     state: present
   when: proxmox_vm | bool
   notify: System | Reboot
-  tags: proxmox_vm
   # This task installs the 'qemu-guest-agent' package and triggers a reboot if the installation was successful.
   # The reboot is handled by the 'Ansible Setup | Reboot the node' handler.
+
+- name: "System | {{ ansible_distribution }} | Set hostname to match inventory name"
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname_short }}"
+
+- name: "System | {{ ansible_distribution }} | Set timezone to defined timezone in group_vars/all"
+  community.general.timezone:
+    name: "{{ timezone }}"
 
 - name: System | Detecting win32yank
   ansible.builtin.stat:

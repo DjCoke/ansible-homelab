@@ -4,33 +4,22 @@ timezone: "Europe/Amsterdam"
 dns_servers:
   - "192.168.1.2"
   - "192.168.1.3"
-homelab_user: ashborn
-homelab_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEXGrUwai6ZD75n5rPTl06f0gEMtzJU0W8xFnR9YPghE"
-ansible_user: "{{ homelab_user }}"
 
-# Standard packages we want
-extra_packages:
-  - dconf-cli
-  - python3-psutil
-  - smartmontools
-  - htop
-  - zfsutils-linux
-  - bonnie++
-  - unzip
-  - lm-sensors
-  - vim
-  - htop
-  - curl
-  - git
-  - fail2ban
-  - unzip
-  - net-tools
-  - ufw
-  - ca-certificates
+# --------------------------------------------------------------------
+# USER CONFIGURATION
+# --------------------------------------------------------------------
+
+homelab_user: ashborn
+homelab_user_pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEXGrUwai6ZD75n5rPTl06f0gEMtzJU0W8xFnR9YPghE {{ homelab_user }} default"
+ansible_user: "{{ homelab_user }}"
 
 # SSH Settings
 ssh_port: 22
 ssh_users: "{{ homelab_user }}"
+
+# REQUIRED: Your name for git commits and configurations
+# This will be used for git config user.name
+git_user_name: "DjCoke"
 
 # standard upgrades
 unattended_upgrades: true
@@ -39,16 +28,11 @@ unattended_upgrades: true
 debugging: false
 
 # --------------------------------------------------------------------
-# USER CONFIGURATION
-# --------------------------------------------------------------------
-
-# REQUIRED: Your name for git commits and configurations
-# This will be used for git config user.name
-git_user_name: "DjCoke"
-
-# --------------------------------------------------------------------
 # ROLE CONFIGURATION
 # --------------------------------------------------------------------
 default_roles:
   - base
+  - users
   - fonts
+  - locale
+  - openssh

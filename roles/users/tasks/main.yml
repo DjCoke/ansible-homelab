@@ -1,0 +1,16 @@
+# 1. Determine the distribution name per host (already done by gather_facts: true)
+
+# 2. Check LOCALLY (on the Ansible controller) whether a tasks file exists for the detected distribution.
+- name: "{{ role_name }} | Check if tasks/{{ ansible_distribution }}.yml exists locally"
+  ansible.builtin.stat:
+    path: "{{ role_path }}/tasks/{{ ansible_distribution }}.yml"
+  delegate_to: localhost
+  become: false
+  vars:
+    ansible_distribution: "{{ hostvars[inventory_hostname].ansible_distribution }}"
+  register: distribution_config
+
+# 3. Include the distribution-specific task file only if it exists
+- name: "{{ role_name }} | Include distro-specific tasks"
+  ansible.builtin.include_tasks: "{{ ansible_distribution }}.yml"
+  when: distribution_config.stat.exists

@@ -1,0 +1,13 @@
+- name: Check if host is running Proxmox
+  ansible.builtin.stat:
+    path: /etc/pve
+  register: is_proxmox_dir
+  changed_when: false
+
+- name: Set fact if host is a Proxmox server
+  ansible.builtin.set_fact:
+    proxmox_server: "{{ is_proxmox_dir.stat.exists and is_proxmox_dir.stat.isdir }}"
+
+- name: Show Proxmox Server State
+  ansible.builtin.debug:
+    msg: "proxmox_server: {{ proxmox_server }}"

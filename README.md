@@ -1,6 +1,5 @@
 # Ansible
 
-
 This will be my awesome Ansible repository!
 Update in 2025
 
@@ -9,8 +8,7 @@ Update in 2025
 Use this playbook to prepare a new node for Homelab inclusion:
 
 ```bash
-ansible-playbook playbooks/bootstrap.yml --user=ashborn --ask-pass --ask-become-pass --tags bootstrap -l <host>
-
+ansible-playbook ansible-playbook main.yml --user=<username> --ask-pass --ask-become-pass --tags base,users -l <host>
 
 This will:
 

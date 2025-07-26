@@ -1,0 +1,13 @@
+- name: Users | root | Ensure account is not locked in proxmox (because of the Web GUI)
+  user:
+    name: root
+    password_lock: false
+  when: proxmox_server
+
+- name: Users | Make sure that sudo exists (Proxmox does not include sudo by default)
+  package:
+    name: sudo
+    state: present
+  when: proxmox_server
+  # This task ensures that the 'sudo' package is installed on Debian-based systems, such as Proxmox.
+  # 'become: true' is used to escalate privileges to root, necessary for installing packages.
