@@ -46,6 +46,10 @@
       - net-tools
       - acl
       - locales
+      - nfs-common
+      - multipath-tools
+      - scsitools
+      - lsscsi
     state: present
   become: true
 

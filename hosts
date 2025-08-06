@@ -1,14 +1,14 @@
 [servers]
-k3s-test.glind.io ansible_host=192.168.1.92
+k3s-test.glind.io ansible_host=192.168.10.103
 
 [master]
-k3s-ashborn.glind.io ansible_host=192.168.1.221
-k3s-jinwoo.glind.io ansible_host=192.168.1.225
+k3s-ashborn.glind.io ansible_host=192.168.10.100
+k3s-jinwoo.glind.io ansible_host=192.168.10.105
 
 [nodes]
-k3s-igris.glind.io ansible_host=192.168.1.223
-k3s-beru.glind.io  ansible_host=192.168.1.224
-k3s-tusk.glind.io  ansible_host=192.168.1.226
+k3s-igris.glind.io ansible_host=192.168.10.101
+k3s-beru.glind.io  ansible_host=192.168.10.102
+k3s-tusk.glind.io  ansible_host=192.168.10.104
 
 [k3s_cluster:children]
 master

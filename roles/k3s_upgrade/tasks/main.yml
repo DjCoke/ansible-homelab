@@ -1,0 +1,37 @@
+---
+- name: "Set K3s version"
+  set_fact:
+    k3s_version: "{{ k3s_upgrade_version }}"  # meegegeven via --extra-vars of defaults
+
+- name: "Check current k3s version"
+  command: k3s --version
+  register: k3s_current
+  changed_when: false
+  become: true
+
+- name: "Abort if already up-to-date"
+  fail:
+    msg: "K3s is already at version {{ k3s_version }}"
+  when: k3s_current.stdout is search(k3s_version)
+
+- name: "Download K3s {{ k3s_version }} binary"
+  ansible.builtin.get_url:
+    url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s"
+    dest: /usr/local/bin/k3s
+    mode: '0755'
+    force: true
+  become: true
+
+- name: Restart k3s (server)
+  ansible.builtin.systemd:
+    name: k3s
+    state: restarted
+  become: true
+  when: inventory_hostname in groups['master']
+
+- name: Restart k3s-node (worker)
+  ansible.builtin.systemd:
+    name: k3s-node
+    state: restarted
+  become: true
+  when: inventory_hostname in groups['nodes']

@@ -56,11 +56,17 @@
         owner: root
         group: root
         mode: '0600'
+    
+    - name: Configure multipath.conf
+      become: true
+      ansible.builtin.copy:
+        dest: /etc/multipath.conf
+        owner: root
+        group: root
+        mode: '0644'
+        content: |
+          defaults {
+              user_friendly_names yes
+              find_multipaths yes
+          }
 
-    - name: "Preparing k3s_cluster | SSH | Populate known_hosts with all cluster members"
-      ansible.builtin.known_hosts:
-        path: /root/.ssh/known_hosts
-        name: "{{ hostvars[item].ansible_host | default(item) }}"
-        key: "{{ lookup('pipe', 'ssh-keyscan -H ' ~ (hostvars[item].ansible_host | default(item))) }}"
-      loop: "{{ groups['k3s_cluster'] }}"
-      when: hostvars[item].ansible_host is defined or item is match('.*\.glind\.io')
